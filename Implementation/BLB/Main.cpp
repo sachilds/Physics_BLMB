@@ -3,11 +3,15 @@
 
 // Methods
 bool Init(); // Starts up and creates the sdl window
+void HandleEvents();
+void Update();
+void Draw();
 void Close(); // Closes SDL
 
 // Variables
 SDL_Window* gameWindow = NULL; // The window to render to
 SDL_Surface* screenSurface = NULL; // The surface contained by the window
+bool isRunning;
 
 int main(int argc, char* args[]) {
 	// Start up SDL
@@ -15,13 +19,20 @@ int main(int argc, char* args[]) {
 		printf("Failed to initialize!\n");
 	else {
 		// Start the game!
-		printf("The game can now be loaded");
+		isRunning = true;
+
+		while (isRunning) {
+			HandleEvents(); // Get user input
+			Update(); // Update the game state
+			Draw(); // Draw the game
+		}
 	}
 
 	// Close the Program
 	// Close(); - Not yet, will call on "Quit" menu option
  	return 0;
 }
+
 
 
 bool Init() {
@@ -50,11 +61,21 @@ bool Init() {
 	return success;
 }
 
-void Close() {
-	// Deallocate surfaces
-	//SDL_FreeSurface(image);
-	//image = NULL;
+void HandleEvents() {
+	
+}
 
+void Update() {
+	
+}
+
+void Draw() {
+	//Just to test stuff
+	SDL_Delay(3000); 
+	isRunning = false;
+}
+
+void Close() {
 	// Destroy window
 	SDL_DestroyWindow(gameWindow); // Will also destroy the surface attached to the window
 	gameWindow = NULL;
