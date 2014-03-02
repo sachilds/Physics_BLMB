@@ -1,0 +1,2 @@
+If the Client can't find SDL2_main, SDL2_image or SDL2_ttf, extract "Backup_SDL" into the root directory of this folder.
+Note: If your local project can't find some SDL files, then extract the zip into this folder.
