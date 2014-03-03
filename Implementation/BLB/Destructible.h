@@ -1,10 +1,12 @@
 #ifndef DESTRUCTIBLE_H
 #define DESTRUCTIBLE_H
-
-class Destructible
+#include "Obstacle.h"
+#include <string>
+using std::string;
+class Destructible:public Obstacle
 {
 public:
-	Destructible();
+	Destructible(string& name,string& path);
 	~Destructible();
 };
 #endif

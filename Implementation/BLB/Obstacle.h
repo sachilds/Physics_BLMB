@@ -1,10 +1,14 @@
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
-
-class Obstacle
+#include<string>
+#include "GameObject.h"
+using std::string;
+class Obstacle:public GameObject
 {
+protected:
+	string path;
 public:
-	Obstacle();
+	Obstacle(string& name,string& path);
 	~Obstacle();
 };
 #endif
