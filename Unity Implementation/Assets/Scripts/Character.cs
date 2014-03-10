@@ -1,26 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Character : MonoBehaviour {
+[RequireComponent(typeof(SpriteRenderer))] 	//For visually rendering the character
+[RequireComponent(typeof(Animation))]		//Stores all animations of the character
+[RequireComponent(typeof(Rigidbody2D))]		//Temporary for now
+[RequireComponent(typeof(BoxCollider2D))]		//Temporary for now
+public class Character : MonoBehaviour 
+{
+	public Vector2 size;					//Width and height of the character (pixels)
+	public Vector2 position;				//X and Y position of the character
+	public Rect boundingRect;				//Bounds of the character composed of the x, y, w, h
+	public float rotation;					//Rotation (theta) of the player
+	public int scale;						//Transform scale of the player
+	public int walkSpeed;					//Regular speed of the character (pixels)
+	public int runSpeed;					//Running speed of the character (pixels)
+	public Sprite spriteSheet;				//Spritesheet of the character
+	public SpriteRenderer spriteRenderer;	//Renderer for the character
+	public BoxCollider2D boxCollider;
 
-    public Vector2 size;
-    public Vector2 position;
-    private float speed;
+	void Awake() 
+	{
+		//Initialize some variables, load resources, etc.
+		walkSpeed = 3;
+		runSpeed = 6;
 
-    public Texture2D sprite;
+		spriteSheet = Resources.Load<Sprite>("Sprites/CandySprites");
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		spriteRenderer.sprite = spriteSheet;
 
-	// Use this for initialization
-	void Start () {
-        sprite = Resources.Load<Texture2D>("sprite") as Texture2D;
-        position = transform.position;
-        size = new Vector2(sprite.width, sprite.height);
-        speed = 0.1f;
+		size = new Vector2(spriteSheet.rect.width / 100, spriteSheet.rect.height / 100);
+		position = new Vector2(transform.position.x, transform.position.y);
+		boundingRect = new Rect(position.x, position.y, size.x, size.y);
+		rotation = transform.rotation.z;
+		scale = 3;
+		transform.localScale = new Vector3(scale, scale, scale);
+
+		boxCollider = GetComponent<BoxCollider2D>();
+		boxCollider.size = new Vector2(size.x, size.y);
+		boxCollider.center = new Vector2(0, size.y / 2);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        position.x = 0;
 
-        transform.Translate(position.x + speed * Time.deltaTime, position.y * Time.deltaTime, 0);
+	void Update() 
+	{
+		//==UPDATE VALUES===================================================//
+		size = new Vector2(spriteSheet.rect.width, spriteSheet.rect.height);
+		position = new Vector2(transform.position.x, transform.position.y);
+		boundingRect = new Rect(position.x, position.y, size.x, size.y);
+		rotation = transform.rotation.z;
+		//==================================================================//
+
+		//==UPDATE PHYSICS==================================================//
+
+		//Temporary movement stuff for now
+
+		if (Input.GetButton("Horizontal"))												//If we are pressing the left or right movement buttons
+		{
+			float h = Input.GetAxisRaw("Horizontal");									//Which direction (negative/positive) are we travelling
+			transform.Translate(((float)walkSpeed * h) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
+		}
+
+		//==================================================================//
+
+        
 	}
 }
