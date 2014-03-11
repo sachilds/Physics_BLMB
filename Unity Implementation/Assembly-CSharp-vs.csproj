@@ -49,9 +49,11 @@
      <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\Game_Manager.cs" />
      <Compile Include="Assets\Scripts\PhysicsEngine.cs" />
+     <Compile Include="Assets\Scripts\TeleportScript.cs" />
      <Compile Include="Assets\Testing\TestingScripts\Collider_Demo.cs" />
      <Compile Include="Assets\Testing\TestingScripts\CustomRigidBody.cs" />
      <Compile Include="Assets\Testing\TestingScripts\DummyMovement.cs" />
+     <Compile Include="Assets\Testing\TestingScripts\PlayerInputScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
