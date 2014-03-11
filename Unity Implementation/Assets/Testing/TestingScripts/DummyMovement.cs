@@ -2,11 +2,11 @@
 using System.Collections;
 
 public class DummyMovement : MonoBehaviour {
-	Rigidbody2D mRigidbody;
+	CustomRigidBody mRigidbody;
 	int mSpeed = 10;
 
 	void Start(){
-		mRigidbody = gameObject.GetComponent<Rigidbody2D>();
+		mRigidbody = gameObject.GetComponent<CustomRigidBody>();
 	}
 	// Update is called once per frame
 	void Update () {
