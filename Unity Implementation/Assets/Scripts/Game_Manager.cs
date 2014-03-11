@@ -34,6 +34,7 @@ public class Game_Manager : MonoBehaviour {
         else {
             Destroy(gameObject);
         }
+
 	}
 	
 	// Update is called once per frame

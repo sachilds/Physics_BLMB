@@ -53,14 +53,18 @@ public class Character : MonoBehaviour
 
 		//Temporary movement stuff for now
 
-		if (Input.GetButton("Horizontal"))												//If we are pressing the left or right movement buttons
-		{
-			float h = Input.GetAxisRaw("Horizontal");									//Which direction (negative/positive) are we travelling
-			transform.Translate(((float)walkSpeed * h) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
-		}
+//		if (Input.GetButton("Horizontal"))												//If we are pressing the left or right movement buttons
+//		{
+//			float h = Input.GetAxisRaw("Horizontal");									//Which direction (negative/positive) are we travelling
+//			transform.Translate(((float)walkSpeed * h) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
+//		}
 
 		//==================================================================//
 
         
+	}
+
+	public void MoveHorizontal(float value){
+		transform.Translate(((float)walkSpeed * value) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
 	}
 }

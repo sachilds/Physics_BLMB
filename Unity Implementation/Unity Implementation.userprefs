@@ -1,17 +1,12 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Testing\TestingScripts\CustomRigidBody.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerInputScript.cs">
     <Files>
-      <File FileName="Assets\Testing\TestingScripts\DummyMovement.cs" Line="9" Column="59" />
-      <File FileName="Assets\Testing\TestingScripts\Collider_Demo.cs" Line="1" Column="1" />
-      <File FileName="Assets\Testing\TestingScripts\CustomRigidBody.cs" Line="32" Column="1" />
-=======
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\Desktop\UnityFinal\Assets\Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo.cs">
-    <Files>
-      <File FileName="..\..\..\Desktop\UnityFinal\Assets\Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo.cs" Line="177" Column="34" />
->>>>>>> just some demo stuff and multi input
+      <File FileName="Assets\Scripts\PlayerInputScript.cs" Line="26" Column="18" />
+      <File FileName="..\..\..\Desktop\UnityFinal\Assets\Assets\Scripts\GUI_Script.cs" Line="1" Column="1" />
+      <File FileName="Assets\Testing\TestingScripts\DummyMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Character.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Game_Manager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

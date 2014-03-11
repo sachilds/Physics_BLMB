@@ -6,18 +6,21 @@ public enum PlayerNumber{
 }
 
 public class PlayerInputScript : MonoBehaviour {
-    
+	private Character Player;
     private Rigidbody2D rigidbody;
     public PlayerNumber playerNumber;
-    public float Speed;
-    public float JumpSpeed; 
+   
     
     //TEMP VARIABLES. not permanent
     bool isJumping = false;
-   
+	public float JumpSpeed; 
+
     void Start(){
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        Game_Manager.gameState = Game_Manager.GameState.InGame;////////TEMPORARY
+		Player = gameObject.GetComponent<Character>();
+		Debug.Log(Player.ToString());
+		//delete if u want game to start at MainMenu 
+		Game_Manager.gameState = Game_Manager.GameState.InGame;////////TEMPORARY
     }
 // Update is called once per frame
 	void Update () {
@@ -50,9 +53,8 @@ public class PlayerInputScript : MonoBehaviour {
         {
             case PlayerNumber.one:
                 //Left and Right
-                rigidbody.AddForce(new Vector2(Input.GetAxis("P1.Horizontal") * Speed, 0));
-
-                if (!isJumping && Input.GetAxis("P1.Jump") > 0)
+				Player.MoveHorizontal(Input.GetAxis("P1.Horizontal"));
+				if (!isJumping && Input.GetAxis("P1.Jump") > 0)
                 {
                     isJumping = true;
                     rigidbody.AddForce(new Vector2(0, 1 * JumpSpeed));
@@ -63,8 +65,7 @@ public class PlayerInputScript : MonoBehaviour {
             
             case PlayerNumber.two:
                 //Left and Right
-                rigidbody.AddForce(new Vector2(Input.GetAxis("P2.Horizontal") * Speed, 0));
-
+				Player.MoveHorizontal(Input.GetAxis("P2.Horizontal"));
                 if (!isJumping && Input.GetAxis("P2.Jump") > 0)
                 {
                     isJumping = true;
