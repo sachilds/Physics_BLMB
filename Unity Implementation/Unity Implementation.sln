@@ -17,7 +17,11 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+<<<<<<< HEAD
 																																	GlobalSection(MonoDevelopProperties) = preSolution
+=======
+																																			GlobalSection(MonoDevelopProperties) = preSolution
+>>>>>>> 0016f56805913181ea4168207014cfad28457602
 =======
 																														GlobalSection(MonoDevelopProperties) = preSolution
 >>>>>>> just some demo stuff and multi input

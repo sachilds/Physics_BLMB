@@ -48,7 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\Game_Manager.cs" />
+     <Compile Include="Assets\Scripts\Hat.cs" />
      <Compile Include="Assets\Scripts\PhysicsEngine.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerInputScript.cs" />
      <Compile Include="Assets\Scripts\TeleportScript.cs" />
      <Compile Include="Assets\Testing\TestingScripts\Collider_Demo.cs" />
