@@ -1,0 +1,12 @@
+Jobs 
+Mar12 - Mar19
+	- Rigidbody set up (Cass)
+	- Physics engine (Sarah)
+		- Movement
+		- Bounce
+	- UI Implementation (Justin)
+		- Main Menu
+		- Gameplay UI
+	- Hats (Deanna)
+		- Providing Powerups, etc.
+	- Camera Script (Brian)
