@@ -4,27 +4,33 @@ using System.Collections;
 [RequireComponent(typeof(SpriteRenderer))] 	//For visually rendering the character
 [RequireComponent(typeof(Animation))]		//Stores all animations of the character
 [RequireComponent(typeof(Rigidbody2D))]		//Temporary for now
-[RequireComponent(typeof(BoxCollider2D))]		//Temporary for now
+[RequireComponent(typeof(BoxCollider2D))]	//Temporary for now
 public class Character : MonoBehaviour 
 {
+	[HideInInspector]
 	public Vector2 size;					//Width and height of the character (pixels)
+	[HideInInspector]
 	public Vector2 position;				//X and Y position of the character
+	[HideInInspector]
 	public Rect boundingRect;				//Bounds of the character composed of the x, y, w, h
+	[HideInInspector]
 	public float rotation;					//Rotation (theta) of the player
+	[HideInInspector]
+	public SpriteRenderer spriteRenderer;	//Renderer for the character
+	[HideInInspector]
+	public BoxCollider2D boxCollider;
+
+	//Editable values via Inspector
 	public int scale;						//Transform scale of the player
 	public int walkSpeed;					//Regular speed of the character (pixels)
 	public int runSpeed;					//Running speed of the character (pixels)
 	public Sprite spriteSheet;				//Spritesheet of the character
-	public SpriteRenderer spriteRenderer;	//Renderer for the character
-	public BoxCollider2D boxCollider;
 
-	void Awake() 
+	public virtual void Awake() 
 	{
 		//Initialize some variables, load resources, etc.
-		walkSpeed = 3;
-		runSpeed = 6;
-
-		spriteSheet = Resources.Load<Sprite>("Sprites/CandySprites");
+		if (!spriteSheet)
+			spriteSheet = Resources.Load<Sprite>("Sprites/CandySprites");
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		spriteRenderer.sprite = spriteSheet;
 
@@ -32,7 +38,6 @@ public class Character : MonoBehaviour
 		position = new Vector2(transform.position.x, transform.position.y);
 		boundingRect = new Rect(position.x, position.y, size.x, size.y);
 		rotation = transform.rotation.z;
-		scale = 3;
 		transform.localScale = new Vector3(scale, scale, scale);
 
 		boxCollider = GetComponent<BoxCollider2D>();
@@ -40,7 +45,7 @@ public class Character : MonoBehaviour
 		boxCollider.center = new Vector2(0, size.y / 2);
 	}
 
-	void Update() 
+	public virtual void Update() 
 	{
 		//==UPDATE VALUES===================================================//
 		size = new Vector2(spriteSheet.rect.width, spriteSheet.rect.height);
