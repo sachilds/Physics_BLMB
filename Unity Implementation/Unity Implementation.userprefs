@@ -1,12 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerInputScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TeleportScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerInputScript.cs" Line="26" Column="18" />
-      <File FileName="..\..\..\Desktop\UnityFinal\Assets\Assets\Scripts\GUI_Script.cs" Line="1" Column="1" />
-      <File FileName="Assets\Testing\TestingScripts\DummyMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Character.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Game_Manager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TeleportScript.cs" Line="6" Column="1" />
+      <File FileName="Assets\Scripts\PlayerInputScript.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\Desktop\UnityFinal\Assets\Assets\Teleporter.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TeleportScript.cs" Line="6" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

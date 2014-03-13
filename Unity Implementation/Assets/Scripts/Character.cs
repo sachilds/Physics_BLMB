@@ -65,6 +65,7 @@ public class Character : MonoBehaviour
 	}
 
 	public void MoveHorizontal(float value){
-		transform.Translate(((float)walkSpeed * value) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
+        //gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(((float)walkSpeed * value) * Time.deltaTime, 0));
+        transform.Translate(((float)walkSpeed * value) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
 	}
 }

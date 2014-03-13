@@ -20,7 +20,7 @@ public class PlayerInputScript : MonoBehaviour {
 		Player = gameObject.GetComponent<Character>();
 		Debug.Log(Player.ToString());
 		//delete if u want game to start at MainMenu 
-		Game_Manager.gameState = Game_Manager.GameState.InGame;////////TEMPORARY
+		Game_Manager.gameState = Game_Manager.GameState.InGame;
     }
 // Update is called once per frame
 	void Update () {
