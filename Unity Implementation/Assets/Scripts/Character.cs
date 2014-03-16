@@ -28,6 +28,9 @@ public class Character : MonoBehaviour
 
 	public virtual void Awake() 
 	{
+        // TODO remove this later
+        PhysicsEngine.TestPhysics();
+
 		//Initialize some variables, load resources, etc.
 		if (!spriteSheet)
 			spriteSheet = Resources.Load<Sprite>("Sprites/CandySprites");
