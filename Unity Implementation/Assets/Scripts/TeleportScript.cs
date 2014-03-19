@@ -7,7 +7,7 @@ public enum TeleporterType
     StageTransition,
 }
 public class TeleportScript : MonoBehaviour {
-    private static bool PorterReady = true;  
+    
     private Transform MovingTransform;
     private float speed = 30;
 
@@ -15,13 +15,15 @@ public class TeleportScript : MonoBehaviour {
     public Transform WarpToPortal;
 
 
-    public void OnTriggerStay2D (Collider2D c){
-        
-        if (PorterReady && c.tag == "Player"){
-            PorterReady = false;
-            MovingTransform = c.transform;
-            
-            StartCoroutine("TeleportPlayer");
+    public void OnTriggerEnter2D(Collider2D c)
+    {
+        if (c.GetComponent<SpriteRenderer>().enabled)
+        {
+            if (c.tag == "Player")
+            {
+                MovingTransform = c.transform;
+                StartCoroutine("TeleportPlayer");
+            }
         }
     }
 
@@ -36,7 +38,6 @@ public class TeleportScript : MonoBehaviour {
         
         while (true)
         {
-            Debug.Log("Here");
             MovingTransform.position = Vector3.Lerp(MovingTransform.position,
                  WarpToPortal.transform.position,
                  speed * Time.deltaTime);
@@ -46,12 +47,13 @@ public class TeleportScript : MonoBehaviour {
             }
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        renderer.enabled = true;
         col.enabled = true;
         rig.isKinematic = false;
+        yield return new WaitForSeconds(0.3f);
 
-        yield return new WaitForSeconds(1);
-        PorterReady = true;
+        renderer.enabled = true;
+        
+
        
             
     }
