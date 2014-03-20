@@ -1,9 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\Desktop\UnityFinal\Assets\Assets\Scripts\MainMenuScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\Desktop\UnityFinal\Assets\Assets\Scripts\SmoothFollowCSharp.cs">
     <Files>
-      <File FileName="..\..\..\Desktop\UnityFinal\Assets\Assets\Scripts\FadeEffect.cs" Line="23" Column="18" />
-      <File FileName="..\..\..\Desktop\UnityFinal\Assets\Assets\Scripts\MainMenuScript.cs" Line="14" Column="60" />
+      <File FileName="..\..\..\Desktop\UnityFinal\Assets\Assets\Scripts\SmoothFollowCSharp.cs" Line="66" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

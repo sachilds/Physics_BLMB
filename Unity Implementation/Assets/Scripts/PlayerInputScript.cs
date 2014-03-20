@@ -18,7 +18,6 @@ public class PlayerInputScript : MonoBehaviour {
     void Start(){
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
 		Player = gameObject.GetComponent<Character>();
-		Debug.Log(Player.ToString());
 		//delete if u want game to start at MainMenu 
 		Game_Manager.gameState = Game_Manager.GameState.InGame;
     }
