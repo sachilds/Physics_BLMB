@@ -16,10 +16,14 @@ public class Character : MonoBehaviour
 	[HideInInspector]
 	public BoxCollider2D boxCollider;
 
+	private bool grounded;					//Checks if the character is grounded
+
 	//Editable values via Inspector
 	public int scale;						//Transform scale of the player
-	public int walkSpeed;					//Regular speed of the character (pixels)
+	public int walkAcceleration;			//Regular speed of the character (pixels)
+	public float walkAirRatio;				//How much air control do we have?
 	public int runSpeed;					//Running speed of the character (pixels)
+	public float maxSlope;					//Maximum slant the player can climb
 	public Sprite spriteSheet;				//Spritesheet of the character
 
 	public virtual void Awake() 
@@ -48,24 +52,36 @@ public class Character : MonoBehaviour
 		size = new Vector2(spriteSheet.rect.width, spriteSheet.rect.height);
 		boundingRect = new Rect(transform.position.x, transform.position.y, size.x, size.y);
 		//==================================================================//
-
-		//==UPDATE PHYSICS==================================================//
-
-		//Temporary movement stuff for now
-
-//		if (Input.GetButton("Horizontal"))												//If we are pressing the left or right movement buttons
-//		{
-//			float h = Input.GetAxisRaw("Horizontal");									//Which direction (negative/positive) are we travelling
-//			transform.Translate(((float)walkSpeed * h) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
-//		}
-
-		//==================================================================//
-
-        
 	}
 
-	public void MoveHorizontal(float value){
-        //gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(((float)walkSpeed * value) * Time.deltaTime, 0));
-        transform.Translate(((float)walkSpeed * value) * Time.deltaTime, 0, 0);			//Translate the player by walkSpeed * direction
+	public void MoveHorizontal(float axisValue)
+	{
+		//Apply force to begin moving character in direction of input if grounded
+		if (grounded)
+			rigidbody2D.AddForce(new Vector3(axisValue * walkAcceleration * Time.deltaTime, 0));
+		//Else, give the player a small ratio of control while they are in the air
+		else
+			rigidbody2D.AddForce(new Vector3(axisValue * walkAcceleration * walkAirRatio * Time.deltaTime, 0));
+	}
+
+	public bool IsGrounded()
+	{
+		return grounded;
+	}
+
+	void OnCollisionStay2D(Collision2D collision)
+	{
+		foreach(ContactPoint2D contact in collision.contacts)
+		{
+			if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope)
+			{
+				grounded = true;
+			}
+		}
+	}
+	
+	void OnCollisionExit2D()
+	{
+		grounded = false;
 	}
 }

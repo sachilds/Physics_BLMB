@@ -6,7 +6,7 @@ public enum PlayerNumber{
 }
 
 public class PlayerInputScript : MonoBehaviour {
-	private Character Player;
+	private Player Player;
     private Rigidbody2D rigidbody;
     public PlayerNumber playerNumber;
    
@@ -16,8 +16,8 @@ public class PlayerInputScript : MonoBehaviour {
 	public float JumpSpeed; 
 
     void Start(){
-        rigidbody = gameObject.GetComponent<Rigidbody2D>();
-		Player = gameObject.GetComponent<Character>();
+        rigidbody = GetComponent<Rigidbody2D>();
+		Player = GetComponent<Player>();
 		//delete if u want game to start at MainMenu 
 		Game_Manager.gameState = Game_Manager.GameState.InGame;
     }
