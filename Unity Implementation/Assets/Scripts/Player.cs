@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Player : Character 
 {
+	public string nickname;
+
 	void Awake()
 	{
 		base.Awake();

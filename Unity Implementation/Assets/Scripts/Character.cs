@@ -10,11 +10,7 @@ public class Character : MonoBehaviour
 	[HideInInspector]
 	public Vector2 size;					//Width and height of the character (pixels)
 	[HideInInspector]
-	public Vector2 position;				//X and Y position of the character
-	[HideInInspector]
 	public Rect boundingRect;				//Bounds of the character composed of the x, y, w, h
-	[HideInInspector]
-	public float rotation;					//Rotation (theta) of the player
 	[HideInInspector]
 	public SpriteRenderer spriteRenderer;	//Renderer for the character
 	[HideInInspector]
@@ -38,9 +34,7 @@ public class Character : MonoBehaviour
 		spriteRenderer.sprite = spriteSheet;
 
 		size = new Vector2(spriteSheet.rect.width / 100, spriteSheet.rect.height / 100);
-		position = new Vector2(transform.position.x, transform.position.y);
-		boundingRect = new Rect(position.x, position.y, size.x, size.y);
-		rotation = transform.rotation.z;
+		boundingRect = new Rect(transform.position.x, transform.position.y, size.x, size.y);
 		transform.localScale = new Vector3(scale, scale, scale);
 
 		boxCollider = GetComponent<BoxCollider2D>();
@@ -52,9 +46,7 @@ public class Character : MonoBehaviour
 	{
 		//==UPDATE VALUES===================================================//
 		size = new Vector2(spriteSheet.rect.width, spriteSheet.rect.height);
-		position = new Vector2(transform.position.x, transform.position.y);
-		boundingRect = new Rect(position.x, position.y, size.x, size.y);
-		rotation = transform.rotation.z;
+		boundingRect = new Rect(transform.position.x, transform.position.y, size.x, size.y);
 		//==================================================================//
 
 		//==UPDATE PHYSICS==================================================//
