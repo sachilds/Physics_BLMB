@@ -6,6 +6,7 @@ public class PlayerLabel : MonoBehaviour
 {
 	private Player playerToFollow;				//Transform the label should hover over
 	public Vector3 labelOffset = Vector3.up;	//How far to draw label above player
+	public Font fontFace;						//Which type face to use
 	private int fontSize;						//Size of the GUIText font
 	private Color[] fontColor = new Color[2];	//Array of colors for the players text color
 	private GUIText guiText;					//Reference of GUIText
@@ -17,7 +18,11 @@ public class PlayerLabel : MonoBehaviour
 
 		guiText.text = playerToFollow.nickname;
 
-		fontSize = 15;																//Set the font size to 15 initially
+		guiText.alignment = TextAlignment.Center;
+
+		guiText.font = fontFace;
+
+		fontSize = 25;																//Set the font size to 15 initially
 		guiText.fontSize = fontSize;												//Set the font size of the player label
 
 		fontColor[0] = new Color(255, 0, 0);										//Player 1 is red
