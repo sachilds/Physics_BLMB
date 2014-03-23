@@ -28,8 +28,8 @@ public class CandyCornAI : MonoBehaviour {
 		mass = 3.0f;
 		slopeAngle = 0f;
 
-		forceNetDrop = PhysicsEngine.CalculateNetForce(dropForce,coeff,mass,slopeAngle);
-		forceNetUp = PhysicsEngine.CalculateNetForce(upForce,coeff,mass,slopeAngle);
+		forceNetDrop = PhysicsEngine.CalculateNetForce(dropForce, coeff, mass);
+		forceNetUp = PhysicsEngine.CalculateNetForce(upForce, coeff, mass);
 
 	}
 	

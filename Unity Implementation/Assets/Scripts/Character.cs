@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
 	public BoxCollider2D boxCollider;
 
 	private bool grounded;					//Checks if the character is grounded
+    public const int MAX_VELOCITY = 15;
 
 	//Editable values via Inspector
 	public int scale;						//Transform scale of the player
@@ -25,12 +26,11 @@ public class Character : MonoBehaviour
 	public int runSpeed;					//Running speed of the character (pixels)
 	public float maxSlope;					//Maximum slant the player can climb
 	public Sprite spriteSheet;				//Spritesheet of the character
+    public float mass;                      // Mass of the player
+    public float jumpForce;                 // The jumping force of the player
 
 	public virtual void Awake() 
 	{
-        // TODO remove this later
-        PhysicsEngine.TestPhysics();
-
 		//Initialize some variables, load resources, etc.
 		if (!spriteSheet)
 			spriteSheet = Resources.Load<Sprite>("Sprites/CandySprites");
@@ -54,34 +54,46 @@ public class Character : MonoBehaviour
 		//==================================================================//
 	}
 
-	public void MoveHorizontal(float axisValue)
-	{
-		//Apply force to begin moving character in direction of input if grounded
-		if (grounded)
-			rigidbody2D.AddForce(new Vector3(axisValue * walkAcceleration * Time.deltaTime, 0));
-		//Else, give the player a small ratio of control while they are in the air
-		else
-			rigidbody2D.AddForce(new Vector3(axisValue * walkAcceleration * walkAirRatio * Time.deltaTime, 0));
+	public void MoveHorizontal(float axisValue) {
+        if (rigidbody2D.velocity.magnitude > MAX_VELOCITY) {
+            rigidbody2D.velocity = rigidbody2D.velocity.normalized * MAX_VELOCITY;
+        }
+        else {
+            float coeff = 0;
+            // Check what the coefficient should be TODO make this a method maybe? For when ice/toffee is applied
+            if (IsGrounded)
+                coeff = 0.8f;
+            else // Higher friction in the air
+                coeff = 0.2f;
+
+            // Apply the forces to the object
+            if (axisValue < -0.1f) { // going left
+                axisValue *= -1;
+                rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * -1 * Time.deltaTime, 0));
+            } else if(axisValue > 0.1f) { // going right
+                rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * Time.deltaTime, 0));
+            }
+        }
 	}
 
-	public bool IsGrounded()
-	{
-		return grounded;
-	}
+    public void Jump() {
+        rigidbody2D.AddForce(new Vector2(0, jumpForce));
+    }
 
-	void OnCollisionStay2D(Collision2D collision)
-	{
-		foreach(ContactPoint2D contact in collision.contacts)
-		{
-			if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope)
-			{
+    public bool IsGrounded {
+        get { return grounded; }
+        set { grounded = value; }
+    }
+
+	void OnCollisionStay2D(Collision2D collision) {
+		foreach(ContactPoint2D contact in collision.contacts) {
+			if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope) {
 				grounded = true;
 			}
 		}
 	}
 	
-	void OnCollisionExit2D()
-	{
+	void OnCollisionExit2D() {
 		grounded = false;
 	}
 }

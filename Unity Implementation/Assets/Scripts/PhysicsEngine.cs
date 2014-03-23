@@ -5,36 +5,32 @@ public class PhysicsEngine : MonoBehaviour {
     public const float GRAVITY = -9.8f;
 
     // The force applied by Friction
-	public static Vector2 CalculateFrictionForce(float coeff, float mass, float slopeAngle) {
+	public static Vector2 CalculateFrictionForce(float coeff, float mass) {
         float Fw = CalculateForceWeight(mass);
-        float Fn = CalculateNormalForce(Fw, slopeAngle);
-        return new Vector2(Fn * coeff, 0);
+        return new Vector2(Fw * coeff, 0);
     }
 
-    // The force applied upwards on the object
-    // Slope Angle should be in RADIANS
-    public static float CalculateNormalForce(float Fw, float slopeAngle) {
-        if (slopeAngle != 0)
-            //return new Vector2(Fw * Mathf.Sin(slopeAngle), Fw * Mathf.Cos(slopeAngle));
-            return Fw * Mathf.Cos(slopeAngle);
-        else
-            return Fw;
-    }
-
+    // Calculate the weight force
     private static float CalculateForceWeight(float mass) {
         return mass * GRAVITY;
     }
 
-    public static Vector2 CalculateNetForce(Vector2 Fa, float coeff, float mass, float slopeAngle) {
-        Vector2 Ff = CalculateFrictionForce(coeff, mass, slopeAngle);
-        float Fw = CalculateForceWeight(mass);
-        return new Vector2(Fa.x - Ff.x, Fw - CalculateNormalForce(Fw, slopeAngle));
+    // Calculate the horizontal net force acting on the object
+    public static float HorizontalNetForce(float appliedForce, float coeffFriction, float mass) {
+        float Ff = HorizontalFrictionForce(coeffFriction, mass);
+        return appliedForce - Ff;
     }
 
-    public static void TestPhysics() {
-        Debug.Log("Friction force: coeff(0.5f), mass(10), slopeAngle(0)" + CalculateFrictionForce(0.5f, 10, 0));
-        Debug.Log("Friction force: coeff(0.5f), mass(10), slopeAngle(3.14)" + CalculateFrictionForce(0.5f, 10, 3.14f));
-        Debug.Log("Friction force: coeff(0.8f), mass(5), slopeAngle(0)" + CalculateFrictionForce(0.8f, 5, 0));
-        Debug.Log("Friction force: coeff(0.1f), mass(3), slopeAngle(0)" + CalculateFrictionForce(0.1f, 3, 0));
+    // Calculate the horizontal friction acting on the object
+    public static float HorizontalFrictionForce(float coeffFriction, float mass) {
+        float Fw = CalculateForceWeight(mass);
+        float Fn = Fw;
+        return Fn * coeffFriction;
+    }
+
+    // DELETE THIS SOON
+    public static Vector2 CalculateNetForce(Vector2 appliedForce, float coeffFriction, float mass) {
+        Vector2 Ff = CalculateFrictionForce(coeffFriction, mass);
+        return new Vector2(appliedForce.x - Ff.x, 0);
     }
 }

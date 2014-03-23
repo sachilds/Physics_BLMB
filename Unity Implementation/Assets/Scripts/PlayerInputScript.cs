@@ -1,30 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 public enum PlayerNumber{
 	one,
 	two
 }
 
 public class PlayerInputScript : MonoBehaviour {
-	private Player Player;
-    private Rigidbody2D rigidbody;
+    private Player Player;
     public PlayerNumber playerNumber;
-   
-    
-    //TEMP VARIABLES. not permanent
-    bool isJumping = false;
-	public float JumpSpeed; 
 
-    void Start(){
-        rigidbody = GetComponent<Rigidbody2D>();
+    void Start() {
 		Player = GetComponent<Player>();
 		//delete if u want game to start at MainMenu 
 		Game_Manager.gameState = Game_Manager.GameState.InGame;
     }
-// Update is called once per frame
+
+    // Update is called once per frame
 	void Update () {
-        switch (Game_Manager.gameState)
-        {
+        switch (Game_Manager.gameState) {
             case Game_Manager.GameState.Menu:
                 break;
             case Game_Manager.GameState.Credits:
@@ -47,16 +41,15 @@ public class PlayerInputScript : MonoBehaviour {
         
 	}
 
-    private void handleGameplay(){
-        switch (playerNumber)
-        {
+    private void handleGameplay() {
+        switch (playerNumber) {
             case PlayerNumber.one:
                 //Left and Right
 				Player.MoveHorizontal(Input.GetAxis("P1.Horizontal"));
-				if (!isJumping && Input.GetAxis("P1.Jump") > 0)
-                {
-                    isJumping = true;
-                    rigidbody.AddForce(new Vector2(0, 1 * JumpSpeed));
+
+				if (Player.IsGrounded && Input.GetAxis("P1.Jump") > 0) {
+                    Player.IsGrounded = false;
+                    Player.Jump();
                     StartCoroutine("JumpDelay");
                 }
                 break;
@@ -65,10 +58,10 @@ public class PlayerInputScript : MonoBehaviour {
             case PlayerNumber.two:
                 //Left and Right
 				Player.MoveHorizontal(Input.GetAxis("P2.Horizontal"));
-                if (!isJumping && Input.GetAxis("P2.Jump") > 0)
-                {
-                    isJumping = true;
-                    rigidbody.AddForce(new Vector2(0, 1 * JumpSpeed));
+
+                if (Player.IsGrounded && Input.GetAxis("P2.Jump") > 0) {
+                    Player.IsGrounded = false;
+                    Player.Jump();
                     StartCoroutine("JumpDelay");
                 }
                 break;
@@ -77,8 +70,7 @@ public class PlayerInputScript : MonoBehaviour {
         }
     }
 
-    private IEnumerator JumpDelay(){
-        yield return new WaitForSeconds(2);
-        isJumping = false;
+    private IEnumerator JumpDelay() {
+        yield return new WaitForSeconds(1.4f);
     }
 }
