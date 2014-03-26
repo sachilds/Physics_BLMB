@@ -31,4 +31,5 @@ public class CandyCloudAI : MonoBehaviour {
 			forceNet *= -1;
 		}
 	}
+	//TODO:Collision detection with object that can destroy cloud
 }

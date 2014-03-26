@@ -28,24 +28,27 @@ public class CandyCornAI : MonoBehaviour {
 		mass = 3.0f;
 		slopeAngle = 0f;
 
-		forceNetDrop = PhysicsEngine.CalculateNetForce(dropForce, coeff, mass);
-		forceNetUp = PhysicsEngine.CalculateNetForce(upForce, coeff, mass);
-
+		//forceNetDrop = PhysicsEngine.CalculateNetForce(dropForce, coeff, mass);
+		//forceNetUp = PhysicsEngine.CalculateNetForce(upForce, coeff, mass);
+		forceNetDrop = CalculateVerticalForce(dropForce,mass);
+		forceNetUp = CalculateVerticalForce(upForce,mass);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Debug.Log ("isDropping = " +isDropping + " hitGround = " +hitGround);
 		Debug.Log("ForceNetDrop.x "+forceNetDrop.x+" forceNetDrop.y "+forceNetDrop.y);
+		//block.transform.Translate(new Vector3(0,0,1*Time.deltaTime));
+
 		if(isDropping && !hitGround)
 		{
-			//physics to make it drop
-			block.transform.Translate(new Vector3(forceNetDrop.x,forceNetDrop.y,0)*Time.deltaTime);
+			//physics to make it drop NOTE: THE APPLIED FORCE ALONG Y IS PUT AS Z BC PLANE HAS BEEN ROTATED
+			block.transform.Translate(new Vector3(forceNetDrop.x,0,forceNetDrop.y)*Time.deltaTime);
 		}
 		else if(isDropping && hitGround)
 		{
 			//physics to return it to starting position
-			block.transform.Translate(new Vector3(forceNetUp.x,forceNetUp.y,0)*Time.deltaTime);
+			block.transform.Translate(new Vector3(forceNetUp.x,0,forceNetUp.y)*Time.deltaTime);
 			if(block.transform.position.y >= startPos.y)
 			{
 				hitGround = false;
@@ -70,6 +73,16 @@ public class CandyCornAI : MonoBehaviour {
 		{
 			hitGround = true;
 		}
+
+	}
+	//temp vertical force
+	Vector2 CalculateVerticalForce(Vector2 appliedForce, float mass)
+	{
+		float fw = PhysicsEngine.GRAVITY * mass;//force weight
+		float fn = fw + appliedForce.y;//normal force
+
+		//Fy net = Fnormal+Fyapplied-Fw
+		return new Vector2(0,fn+appliedForce.y-fw);
 	}
 
 }
