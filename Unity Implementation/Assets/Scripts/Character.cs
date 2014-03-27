@@ -77,7 +77,9 @@ public class Character : MonoBehaviour
 	}
 
     public void Jump() {
-        rigidbody2D.AddForce(new Vector2(0, jumpForce));
+        //i added this since i was handling it in inputscript *Brian*
+        if(IsGrounded)
+            rigidbody2D.AddForce(new Vector2(0, jumpForce));
     }
 
     public bool IsGrounded {
