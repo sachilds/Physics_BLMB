@@ -43,12 +43,12 @@ public class CandyCornAI : MonoBehaviour {
 		if(isDropping && !hitGround)
 		{
 			//physics to make it drop NOTE: THE APPLIED FORCE ALONG Y IS PUT AS Z BC PLANE HAS BEEN ROTATED
-			block.transform.Translate(new Vector3(forceNetDrop.x,0,forceNetDrop.y)*Time.deltaTime);
+			block.transform.Translate(new Vector3(forceNetDrop.x,forceNetDrop.y,0)*Time.deltaTime);
 		}
 		else if(isDropping && hitGround)
 		{
 			//physics to return it to starting position
-			block.transform.Translate(new Vector3(forceNetUp.x,0,forceNetUp.y)*Time.deltaTime);
+			block.transform.Translate(new Vector3(forceNetUp.x,forceNetUp.y,0)*Time.deltaTime);
 			if(block.transform.position.y >= startPos.y)
 			{
 				hitGround = false;

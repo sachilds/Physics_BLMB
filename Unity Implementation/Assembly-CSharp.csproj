@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\CandyCloudAI.cs" />
      <Compile Include="Assets\Scripts\CandyCornAI.cs" />
      <Compile Include="Assets\Scripts\Character.cs" />
+     <Compile Include="Assets\Scripts\FallingSugar.cs" />
      <Compile Include="Assets\Scripts\Game_Manager.cs" />
      <Compile Include="Assets\Scripts\Hat.cs" />
      <Compile Include="Assets\Scripts\Level_Manager.cs" />
