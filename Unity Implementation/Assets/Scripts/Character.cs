@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum GroundType { 
+    REGULAR, SLIPPERY, STICKY
+}
+
 [RequireComponent(typeof(SpriteRenderer))] 	//For visually rendering the character
 [RequireComponent(typeof(Animation))]		//Stores all animations of the character
 [RequireComponent(typeof(Rigidbody2D))]		//Temporary for now
@@ -28,6 +32,10 @@ public class Character : MonoBehaviour
 	public Sprite spriteSheet;				//Spritesheet of the character
     public float mass;                      // Mass of the player
     public float jumpForce;                 // The jumping force of the player
+    public GroundType groundType;
+
+    // Testing variables
+    public float maxHeight;
 
 	public virtual void Awake() 
 	{
@@ -54,17 +62,20 @@ public class Character : MonoBehaviour
 		//==================================================================//
 	}
 
+    // Grounded Property
+    public bool IsGrounded {
+        get { return grounded; }
+        set { grounded = value; }
+    }
+
+    // Horizontal Movement TODO may switch this to movement in general, and check within there if player jumped or not?
+    // Or maybe have a "Has Jumped" and use that to do vertical physics
 	public void MoveHorizontal(float axisValue) {
         if (rigidbody2D.velocity.magnitude > MAX_VELOCITY) {
             rigidbody2D.velocity = rigidbody2D.velocity.normalized * MAX_VELOCITY;
         }
         else {
-            float coeff = 0;
-            // Check what the coefficient should be TODO make this a method maybe? For when ice/toffee is applied
-            if (IsGrounded)
-                coeff = 0.8f;
-            else // Higher friction in the air
-                coeff = 0.2f;
+            float coeff = PhysicsEngine.GetCoeff(IsGrounded, groundType);
 
             // Apply the forces to the object
             if (axisValue < -0.1f) { // going left
@@ -76,26 +87,24 @@ public class Character : MonoBehaviour
         }
 	}
 
+    // Jump Function
     public void Jump() {
-        //i added this since i was handling it in inputscript *Brian*
-        if(IsGrounded)
+        if (IsGrounded) {
+            IsGrounded = false;
             rigidbody2D.AddForce(new Vector2(0, jumpForce));
+        }
     }
-
-    public bool IsGrounded {
-        get { return grounded; }
-        set { grounded = value; }
-    }
-
-	void OnCollisionStay2D(Collision2D collision) {
+	
+    void OnCollisionStay2D(Collision2D collision) {
 		foreach(ContactPoint2D contact in collision.contacts) {
 			if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope) {
-				grounded = true;
-			}
+				IsGrounded = true;
+            }
 		}
 	}
-	
+
 	void OnCollisionExit2D() {
-		grounded = false;
+        // For some reason it doesn't detect this? - Sarah
+		IsGrounded = false;
 	}
 }

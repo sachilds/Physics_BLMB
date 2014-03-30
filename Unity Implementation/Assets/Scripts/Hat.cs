@@ -11,7 +11,9 @@ public class Hat : MonoBehaviour
 	{
 		None,
 		OneHat,
-		AnotherHat
+		AnotherHat,
+        Jello_Spawn,
+        Candy_Cannon
 	}
 	public static HatType hatType;
 
@@ -32,6 +34,7 @@ public class Hat : MonoBehaviour
 	public int scale;						//Transform scale of the hat
 	public Sprite sprite;					//Image for the hat
 
+    private GameObject jelloBlock;
 	private Character wearer;				//Reference to who is wearing the hat
 
 	void Awake() 
@@ -51,6 +54,8 @@ public class Hat : MonoBehaviour
 		boxCollider = GetComponent<BoxCollider2D>();
 		boxCollider.size = new Vector2(size.x, size.y);
 		boxCollider.center = new Vector2(0, size.y / 2);
+
+        jelloBlock = Resources.Load("Prefabs/JELLO_BLOCK") as GameObject;
 	}
 	
 	void Update() 
@@ -76,4 +81,22 @@ public class Hat : MonoBehaviour
 			break;
 		}
 	}
+
+    public void UseMechanic() {
+
+        switch (hatType) {
+            case HatType.None:
+                break;
+            case HatType.OneHat:
+                break;
+            case HatType.AnotherHat:
+                break;
+            case HatType.Jello_Spawn:
+                // Instantiate Jello
+                
+                break;
+            default:
+                break;
+        }
+    }
 }

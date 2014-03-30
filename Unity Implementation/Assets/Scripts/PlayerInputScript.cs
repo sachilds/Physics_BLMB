@@ -27,8 +27,11 @@ public class PlayerInputScript : MonoBehaviour {
                 if(Input.GetAxis("P1.Horizontal") != 0)
 				    Player.MoveHorizontal(Input.GetAxis("P1.Horizontal"));
 
-				if (Player.IsGrounded && Input.GetAxis("P1.Jump") > 0) {
+				if (Input.GetButton("P1.Jump")) {
                     Player.Jump();
+                }
+                if (Input.GetButton("P1.HatMechanic")) {
+                    Player.UseHatMechanic();
                 }
                 break;
             
