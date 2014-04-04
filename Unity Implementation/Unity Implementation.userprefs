@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\ShipGame\Assets\Boids\BoidController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GumballBullet.cs">
     <Files>
-      <File FileName="..\..\..\ShipGame\Assets\Boids\BoidController.cs" Line="14" Column="30" />
+      <File FileName="Assets\Scripts\FallingSugar.cs" Line="36" Column="3" />
+      <File FileName="Assets\Scripts\GumballBullet.cs" Line="18" Column="80" />
+      <File FileName="Assets\Scripts\PhysicsEngine.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TurretAI.cs" Line="28" Column="57" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
