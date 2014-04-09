@@ -70,7 +70,7 @@ public class TeleportScript : MonoBehaviour {
             col.enabled = true;
             rig.isKinematic = false;
             yield return new WaitForSeconds(0.1f);
-            renderer.enabled = true;
+            if (!porterOverride) renderer.enabled = true;
 
         }
                

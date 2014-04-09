@@ -28,7 +28,7 @@ public class Player : Character
         jelloBlock = Resources.Load("Prefabs/JELLO_CUBE") as GameObject;
         spawningEffect = Resources.Load("Prefabs/PorterEffect") as GameObject;
         canSpawn = true;
-        hatType = Hat.HatType.Jello_Spawn;
+       
 	}
 
 	void Update() {
@@ -88,6 +88,14 @@ public class Player : Character
                 break;
             case Hat.HatType.OneHat:
                 break;
+            case Hat.HatType.Indian_Hat:
+                if (canSpawn)
+                {
+                    canSpawn = false;
+                    StartCoroutine("IndianHatAction");
+                }
+                
+                break;
             case Hat.HatType.AnotherHat:
                 break;
             case Hat.HatType.Jello_Spawn:
@@ -119,7 +127,18 @@ public class Player : Character
                 break;
         }
     }
-
+    private IEnumerator IndianHatAction()
+    {
+        Debug.Log("P" + name[6] + ".HatMechanic");
+        while (Input.GetButton("P" + name[6] + ".HatMechanic"))
+        {
+            Debug.Log(name);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        canSpawn = true;
+        //yield return new WaitForSeconds(Time.deltaTime);
+        
+    }
     private IEnumerator Spawn() {
         if (hatType == Hat.HatType.Jello_Spawn) {
             if (!jelloInGame) {

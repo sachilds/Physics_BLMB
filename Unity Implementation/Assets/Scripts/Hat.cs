@@ -12,6 +12,7 @@ public class Hat : MonoBehaviour
 		None,
 		OneHat,
 		AnotherHat,
+        Indian_Hat,
         Jello_Spawn,
         Candy_Cannon
 	}
@@ -76,7 +77,7 @@ public class Hat : MonoBehaviour
 		case HatType.OneHat:
 			//scale = wearer.scale;
 			break;
-		case HatType.AnotherHat:
+		case HatType.Indian_Hat:
 			//scale = wearer.scale;
 			break;
 		}
@@ -89,7 +90,7 @@ public class Hat : MonoBehaviour
                 break;
             case HatType.OneHat:
                 break;
-            case HatType.AnotherHat:
+            case HatType.Indian_Hat:
                 break;
             case HatType.Jello_Spawn:
                 // Instantiate Jello
