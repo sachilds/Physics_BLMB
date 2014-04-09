@@ -27,7 +27,7 @@ public class GumballBullet : MonoBehaviour {
             Destroy(gameObject);   
         }
         
-		//if(c.gameObject.tag!= "Turret")
-			//Destroy(gameObject); //TODO: uncomment that later
+		if(c.gameObject.tag!= "Turret")
+			Destroy(gameObject);
 	}
 }

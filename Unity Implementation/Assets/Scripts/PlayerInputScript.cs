@@ -33,6 +33,9 @@ public class PlayerInputScript : MonoBehaviour {
                 if (Input.GetButton("P1.HatMechanic")) {
                     Player.UseHatMechanic();
                 }
+                if (Input.GetButton("P1.Use")) {
+                    Player.UseHatMechanic();
+                }
                 break;
             
             
@@ -44,8 +47,10 @@ public class PlayerInputScript : MonoBehaviour {
                 if (Player.IsGrounded && Input.GetAxis("P2.Jump") > 0) {
                     Player.Jump();
                 }
-                if (Input.GetButton("P2.HatMechanic"))
-                {
+                if (Input.GetButton("P2.HatMechanic")) {
+                    Player.UseHatMechanic();
+                }
+                if (Input.GetButton("P2.Use")) {
                     Player.UseHatMechanic();
                 }
                 break;
