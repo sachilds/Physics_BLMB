@@ -10,23 +10,23 @@ public class Player : Character
 	public PlayerInputScript playerInput;	//Reference to the players input script
 	public string nickname;					//Nickname to show up above head/scores/lives/etc.
 
+    [HideInInspector]
+    public bool hatInRange;
+    [HideInInspector]
     public Hat currentHat;
+    private Hat closestHat;
+    public Transform hatHolder;
     public Hat.HatType hatType;
 
 	void Awake() {
 		base.Awake();
 
 		playerInput = GetComponent<PlayerInputScript>();	//Get reference to PlayerInputScript component
-<<<<<<< HEAD
-        jelloBlock = Resources.Load("Prefabs/JELLO_CUBE") as GameObject;
         spawningEffect = Resources.Load("Prefabs/PorterEffect") as GameObject;
-        canSpawn = true;
        
-=======
         spawningEffect = Resources.Load("Prefabs/portalEffect") as GameObject;
         if (currentHat)
             hatType = currentHat.hatType;
->>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
 	}
 
 	void Update() {
@@ -60,7 +60,20 @@ public class Player : Character
         Debug.Log("Entered a trigger, tag was: " + c.tag);
     }
 
+    void OnTriggerStay2D(Collider2D c)
+    {
+        if (c.tag == "Hat")
+        {
+            hatInRange = true;
+            closestHat = c.gameObject.GetComponent<Hat>();
+        }
+    }
+
     void OnTriggerExit2D(Collider2D c) {
+        if (c.tag == "Hat")
+        {
+            hatInRange = false;
+        }
         groundType = GroundType.REGULAR;
         Debug.Log("Left a trigger, tag was: " + c.tag);
     }
@@ -77,56 +90,8 @@ public class Player : Character
         }
 
     }
-
-    // TEMP till hats are added 
-<<<<<<< HEAD
-    public void UseHatMechanic() {
-        switch (hatType)
-        {
-            case Hat.HatType.None:
-                break;
-            case Hat.HatType.OneHat:
-                break;
-            case Hat.HatType.Indian_Hat:
-                if (canSpawn)
-                {
-                    canSpawn = false;
-                    StartCoroutine("IndianHatAction");
-                }
-                
-                break;
-            case Hat.HatType.AnotherHat:
-                break;
-            case Hat.HatType.Jello_Spawn:
-                if (jelloBlock && canSpawn) {
-                    canSpawn = false;
-                    StartCoroutine("Spawn");
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void CancelHatMechanic() {
-        switch (hatType) {
-            case Hat.HatType.None:
-                break;
-            case Hat.HatType.OneHat:
-                break;
-            case Hat.HatType.AnotherHat:
-                break;
-            case Hat.HatType.Jello_Spawn:
-                Destroy(jelloInGame);
-                break;
-            case Hat.HatType.Candy_Cannon:
-                Destroy(cannonInGame);
-                break;
-            default:
-                break;
-        }
-    }
-    private IEnumerator IndianHatAction()
+   
+    /*private IEnumerator IndianHatAction()
     {
         Debug.Log("P" + name[6] + ".HatMechanic");
         while (Input.GetButton("P" + name[6] + ".HatMechanic"))
@@ -137,35 +102,31 @@ public class Player : Character
         canSpawn = true;
         //yield return new WaitForSeconds(Time.deltaTime);
         
-    }
-    private IEnumerator Spawn() {
-        if (hatType == Hat.HatType.Jello_Spawn) {
-            if (!jelloInGame) {
-                jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
-            }
-            else {
-                Destroy(jelloInGame);
-                jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
-            }
-            yield return new WaitForSeconds(0.5f);
-            canSpawn = true;
-        }
-        else {
-            Debug.Log("I fell through...");
-            yield return new WaitForSeconds(0);
-        }
+    }*/
 
-=======
     public void UseHatMechanic() 
     {
         if (currentHat)
-            currentHat.UseMechanic();
+        {
+            StartCoroutine(currentHat.UseMechanic());
+        }
     }
 
     public void CancelHatMechanic() 
     {
         if (currentHat)
             currentHat.CancelHatMechanic(currentHat);
->>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
+    }
+
+    public void AttachToPlayer()
+    {
+        Hat.AttachToPlayer(gameObject.GetComponent<Player>(), closestHat);
+        currentHat = closestHat;
+        hatType = currentHat.hatType;
+    }
+
+    public void DetachFromPlayer()
+    {
+
     }
 }

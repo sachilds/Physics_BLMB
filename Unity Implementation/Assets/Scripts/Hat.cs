@@ -5,42 +5,36 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class Hat : MonoBehaviour 
+public class Hat : MonoBehaviour
 {
-	//Enumeration of every hat type possible
-	public enum HatType
-	{
-		None,
-<<<<<<< HEAD
-		OneHat,
-		AnotherHat,
-        Indian_Hat,
-        Jello_Spawn,
-=======
+    //Enumeration of every hat type possible
+    public enum HatType
+    {
+        None,
+        Indian,
         Jello,
->>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
-        Candy_Cannon
-	}
-	public HatType hatType;
+        CandyCannon
+    }
+    public HatType hatType;
 
-	[HideInInspector]
-	public Vector2 size;					//Width and height of the hat (pixels)
-	[HideInInspector]
-	public Vector2 position;				//X and Y position of the hat
-	[HideInInspector]
-	public Rect boundingRect;				//Bounds of the hat composed of the x, y, w, h
-	[HideInInspector]
-	public float rotation;					//Rotation (theta) of the hat
-	[HideInInspector]
-	public SpriteRenderer spriteRenderer;	//Renderer for the hat
-	[HideInInspector]
-	public BoxCollider2D boxCollider;
+    [HideInInspector]
+    public Vector2 size;					//Width and height of the hat (pixels)
+    [HideInInspector]
+    public Vector2 position;				//X and Y position of the hat
+    [HideInInspector]
+    public Rect boundingRect;				//Bounds of the hat composed of the x, y, w, h
+    [HideInInspector]
+    public float rotation;					//Rotation (theta) of the hat
+    [HideInInspector]
+    public SpriteRenderer spriteRenderer;	//Renderer for the hat
+    [HideInInspector]
+    public BoxCollider2D boxCollider;
     [HideInInspector]
     public CircleCollider2D trigger;
 
-	//Editable values via Inspector
-	public int scale;						//Transform scale of the hat
-	public Sprite sprite;					//Image for the hat
+    //Editable values via Inspector
+    public int scale;						//Transform scale of the hat
+    public Sprite sprite;					//Image for the hat
 
     public GameObject jelloBlock;
     private GameObject jelloInGame;
@@ -48,66 +42,65 @@ public class Hat : MonoBehaviour
     private GameObject cannonInGame;
     private bool canSpawn;
 
-	private Character wearer;				//Reference to who is wearing the hat
+    private Player wearer;				//Reference to who is wearing the hat
 
-	void Awake() 
-	{
+    void Awake()
+    {
         canSpawn = true;
 
-		//Initialize some variables, load resources, etc.
-		spriteRenderer = GetComponent<SpriteRenderer>();
-		spriteRenderer.sprite = sprite;
-		
-		size = new Vector2(sprite.rect.width / 100, sprite.rect.height / 100);
-		position = new Vector2(transform.position.x, transform.position.y);
-		boundingRect = new Rect(position.x, position.y, size.x, size.y);
-		rotation = transform.rotation.z;
-		transform.localScale = new Vector3(scale, scale, scale);
-		
-		boxCollider = GetComponent<BoxCollider2D>();
+        //Initialize some variables, load resources, etc.
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprite;
+        spriteRenderer.sortingLayerName = "Equipted";
 
-        jelloBlock = Resources.Load("Prefabs/jelloBlock") as GameObject;
-	}
-	
-	void Update() 
-	{
-		//==UPDATE VALUES===================================================//
-		size = new Vector2(sprite.rect.width, sprite.rect.height);
-		position = new Vector2(transform.position.x, transform.position.y);
-		boundingRect = new Rect(position.x, position.y, size.x, size.y);
-		rotation = transform.rotation.z;
-		//==================================================================//
+        size = new Vector2(sprite.rect.width / 100, sprite.rect.height / 100);
+        position = new Vector2(transform.position.x, transform.position.y);
+        boundingRect = new Rect(position.x, position.y, size.x, size.y);
+        rotation = transform.rotation.z;
+        transform.localScale = new Vector3(scale, scale, scale);
 
-		//Update and apply effects based on the current hat equipted
-		switch(hatType)
-		{
-		case HatType.None:
-			//scale = wearer.scale;
-			break;
-<<<<<<< HEAD
-		case HatType.OneHat:
-			//scale = wearer.scale;
-			break;
-		case HatType.Indian_Hat:
-=======
-        case HatType.Jello:
->>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
-			//scale = wearer.scale;
-			break;
-		}
-	}
+        boxCollider = GetComponent<BoxCollider2D>();
+    }
+
+    void Update()
+    {
+        //==UPDATE VALUES===================================================//
+        size = new Vector2(sprite.rect.width, sprite.rect.height);
+        position = new Vector2(transform.position.x, transform.position.y);
+        boundingRect = new Rect(position.x, position.y, size.x, size.y);
+        rotation = transform.rotation.z;
+        //==================================================================//
+
+        //Update and apply effects based on the current hat equipted
+        switch (hatType)
+        {
+            case HatType.None:
+                //scale = wearer.scale;
+                break;
+            case HatType.Indian:
+            case HatType.Jello:
+                //scale = wearer.scale;
+                break;
+        }
+
+        if (wearer)
+            transform.position = wearer.hatHolder.position;
+    }
 
     public IEnumerator UseMechanic()
     {
-        switch (hatType) 
+        Debug.Log("YOLO");
+        switch (hatType)
         {
             case HatType.None:
                 break;
             case HatType.Jello:
-                if (!jelloInGame) {
+                if (!jelloInGame)
+                {
                     jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
                 }
-                else {
+                else
+                {
                     Destroy(jelloInGame);
                     jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
                 }
@@ -125,14 +118,11 @@ public class Hat : MonoBehaviour
         {
             case Hat.HatType.None:
                 break;
-<<<<<<< HEAD
-            case HatType.Indian_Hat:
-=======
+            case HatType.Indian:
             case Hat.HatType.Jello:
                 Destroy(currentHat.gameObject);
->>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
                 break;
-            case Hat.HatType.Candy_Cannon:
+            case Hat.HatType.CandyCannon:
                 Destroy(currentHat.gameObject);
                 break;
             default:
@@ -140,12 +130,16 @@ public class Hat : MonoBehaviour
         }
     }
 
-    public void AttachToPlayer()
+    public static void AttachToPlayer(Player player, Hat newHat)
     {
-
+        newHat.wearer = player;
+        newHat.rigidbody2D.isKinematic = true;
+        newHat.collider2D.enabled = false;
+        newHat.transform.position = player.hatHolder.position;
+        newHat.transform.parent = player.hatHolder;
     }
 
-    public void DetachFromPlayer()
+    public static void DetachFromPlayer()
     {
 
     }
