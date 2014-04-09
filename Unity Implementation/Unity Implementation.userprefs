@@ -1,11 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GumballBullet.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character.cs">
     <Files>
-      <File FileName="Assets\Scripts\FallingSugar.cs" Line="36" Column="3" />
-      <File FileName="Assets\Scripts\GumballBullet.cs" Line="18" Column="80" />
-      <File FileName="Assets\Scripts\PhysicsEngine.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\TurretAI.cs" Line="28" Column="57" />
+      <File FileName="Assets\Scripts\Character.cs" Line="66" Column="29" />
+      <File FileName="Assets\Scripts\GumballBullet.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TeleportScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Level_Manager.cs" Line="68" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

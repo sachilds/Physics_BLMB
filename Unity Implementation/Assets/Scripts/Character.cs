@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
 	public BoxCollider2D boxCollider;
 
 	private bool grounded;					//Checks if the character is grounded
-    public const int MAX_VELOCITY = 15;
+    public const int MAX_VELOCITY = 10;
 
 	//Editable values via Inspector
 	public int scale;						//Transform scale of the player
@@ -75,13 +75,16 @@ public class Character : MonoBehaviour
             rigidbody2D.velocity = rigidbody2D.velocity.normalized * MAX_VELOCITY;
         }
         else {
+			//rigidbody2D.
             float coeff = PhysicsEngine.GetCoeff(IsGrounded, groundType);
 
             // Apply the forces to the object
             if (axisValue < -0.1f) { // going left
-                axisValue *= -1;
+                axisValue *= -500;
+				//axisValue *= 500;
                 rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * -1 * Time.deltaTime, 0));
             } else if(axisValue > 0.1f) { // going right
+				//axisValue *= 500;
                 rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * Time.deltaTime, 0));
             }
         }

@@ -6,33 +6,29 @@ public struct Segment
     public Collider2D sCollider;
     public Transform sTransform;
     public Vector3 sBeginningPos;
-    public Vector3 sEndPos;
+  
     public float sSpeed;
-    public bool sFinished;
+ 
 
 }
 
 
 public class Segment_Script : MonoBehaviour {
+    public Transform defaultSpawn;
     private Segment[] segments;
   
+    public Transform defaultEndSpawn;
 	// Use this for initialization
 	void Start () {
+        
        Collider2D[] tempObjects = gameObject.GetComponentsInChildren<Collider2D>();
        segments = new Segment[tempObjects.Length];
 
         for (int i = 0; i < segments.Length; i++)
 		{
             segments[i].sTransform = tempObjects[i].transform;
-            
             segments[i].sBeginningPos = tempObjects[i].transform.localPosition;
-            segments[i].sEndPos = new Vector2(tempObjects[i].transform.localPosition.x, tempObjects[i].transform.localPosition.y - 20);
-            segments[i].sSpeed = Random.Range(20 , 40);
-            
-            segments[i].sTransform.localPosition = segments[i].sEndPos;
-            
-            segments[i].sFinished = false;
-
+           
             if (tempObjects[i].renderer != null)
             {
                 segments[i].sRenderer = tempObjects[i].renderer;
@@ -45,10 +41,6 @@ public class Segment_Script : MonoBehaviour {
             }
             
 		}
-        
-
-
-        
     }
 
     private void ToggleRenderer(Segment s)
@@ -73,81 +65,27 @@ public class Segment_Script : MonoBehaviour {
             segments[i].sTransform.localPosition = segments[i].sBeginningPos;
             segments[i].sRenderer.enabled = true;
             segments[i].sCollider.enabled = true;
-            segments[i].sFinished = false;
         }
     }
-    public void StartRising(){
+    public void SpawnSegment(){
         for (int i = 0; i < segments.Length; i++)
         {
             ToggleRenderer(segments[i]);
-            segments[i].sFinished = false;
-        }
-        StartCoroutine("RaisingCoRoutine");
-    }
-
-    public void StartDropping() {
-        for (int i = 0; i < segments.Length; i++)
-        {
-            ToggleRenderer(segments[i]);
-            segments[i].sFinished = false;
-        }
-        StartCoroutine("DroppingCoRoutine");
-    }
-    public IEnumerator DroppingCoRoutine() {
-        int count = 0;
-        while (count < segments.Length)
-        {
-            for (int i = 0; i < segments.Length; i++)
-            {
-                if (!segments[i].sFinished)
-                {
-                    segments[i].sTransform.localPosition = Vector3.Lerp(segments[i].sTransform.localPosition,
-                    segments[i].sEndPos,
-                    segments[i].sSpeed * Time.deltaTime);
-                }
-                if (!segments[i].sFinished && segments[i].sTransform.localPosition == segments[i].sEndPos)
-                {
-                    Debug.Log(segments[i].sTransform.localPosition.ToString());
-                    segments[i].sFinished = true;
-                    ++count;
-                }
-
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
+            segments[i].sCollider.enabled = true;
+            
         }
         
     }
-    public IEnumerator RaisingCoRoutine()
-    {
 
-        int count = 0;
-        while (count < segments.Length)
+    public void RemoveSegment() {
+        for (int i = 0; i < segments.Length; i++)
         {
-            for (int i = 0; i < segments.Length; i++)
-            {
-                if (!segments[i].sFinished)
-                {
-                    segments[i].sTransform.localPosition = Vector3.Lerp(segments[i].sTransform.localPosition,
-                    segments[i].sBeginningPos,
-                    segments[i].sSpeed * Time.deltaTime);
-                }
-                if (!segments[i].sFinished && segments[i].sTransform.localPosition == segments[i].sBeginningPos)
-                {
-                    Debug.Log(segments[i].sTransform.localPosition.ToString());
-                    segments[i].sFinished = true;
-                    segments[i].sCollider.enabled = true;
-                    ++count;
-                }
-               
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
+            ToggleRenderer(segments[i]);
+            segments[i].sCollider.enabled = true;
         }
-        TeleportScript.SpawnPlayer();
        
-
-     
-
     }
+  
  
 	
 	

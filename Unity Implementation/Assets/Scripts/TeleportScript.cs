@@ -8,13 +8,13 @@ public enum TeleporterType
 }
 
 public class TeleportScript : MonoBehaviour {
-    private static bool porterOverride = false;
+    public static bool porterOverride = false;
     private Transform MovingTransform;
-    private float speed = 30;
+    private float speed = 15;
 
     public TeleporterType PorterType;
     public Transform WarpToPortal;
-    private static bool Standby = false;
+   
 
     public void OnTriggerEnter2D(Collider2D c)
     {
@@ -23,30 +23,26 @@ public class TeleportScript : MonoBehaviour {
             if (c.tag == "Player" && PorterType == TeleporterType.Within_Stage)
             {
                 MovingTransform = c.transform;
-                StartCoroutine("TeleportPlayer", c.transform);
+                StartCoroutine("TeleportPlayerWithin", c.transform);
             }
             if (c.tag == "Player" && PorterType == TeleporterType.StageTransition)
             {//could not for the life of me convert the char '1' from Stage1 to an int so did this
                 char temp = name[5];
                 char temp2 = WarpToPortal.name[5];
                Level_Manager.Instance.ChangeSegments(temp, temp2);
-               porterOverride = true;
-               StartCoroutine("TeleportPlayer", Level_Manager.Instance.Player1.transform);
-               StartCoroutine("TeleportPlayer", Level_Manager.Instance.Player2.transform);
+                StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player1.transform);
+               StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player2.transform);
             }
-
         }
 
 
     }
 
-    public static void SpawnPlayer()
-    {
+
+    
+    private IEnumerator TeleportPlayerWithin(Transform pTransform){
+        Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
         
-        Standby = false;
-    }
-    private IEnumerator TeleportPlayer(Transform pTransform){
-       
         SpriteRenderer renderer = pTransform.gameObject.GetComponent<SpriteRenderer>();
         Collider2D col = pTransform.gameObject.GetComponent<BoxCollider2D>();
         Rigidbody2D rig = pTransform.gameObject.GetComponent<Rigidbody2D>();
@@ -58,13 +54,8 @@ public class TeleportScript : MonoBehaviour {
 
         while (true)
         {
-            Debug.Log("teleporting " + pTransform.ToString() + " to " + PorterType);
-
-            if (porterOverride && PorterType == TeleporterType.Within_Stage)
-            {
-                break;
-            }
-                
+            if(porterOverride)
+               break;
             pTransform.position = Vector3.Lerp(pTransform.position,
                  WarpToPortal.transform.position,
                  speed * Time.deltaTime);
@@ -74,31 +65,18 @@ public class TeleportScript : MonoBehaviour {
             }
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        if (PorterType == TeleporterType.Within_Stage && !porterOverride)
-        {
+       if(!porterOverride){
+           Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
             col.enabled = true;
             rig.isKinematic = false;
             yield return new WaitForSeconds(0.1f);
-            if (!porterOverride)
-            {
-               renderer.enabled = true;
-            }
-        }
-        else if (PorterType == TeleporterType.StageTransition)
-        {
-            Standby = true;
-            while (Standby)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-                
-            }
-            col.enabled = true;
-            rig.isKinematic = false;
-            yield return new WaitForSeconds(0.3f);
-
             renderer.enabled = true;
-            porterOverride = false;
+
         }
+               
+            
+        
+     
 
         
         
@@ -106,4 +84,39 @@ public class TeleportScript : MonoBehaviour {
        
             
     }
+
+    private IEnumerator TeleportPlayerToNext(Transform pTransform)
+    {
+        Vector3 endPos = Level_Manager.Instance.spawnPosition.position;
+        Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
+        porterOverride = true;
+        SpriteRenderer renderer = pTransform.gameObject.GetComponent<SpriteRenderer>();
+        Collider2D col = pTransform.gameObject.GetComponent<BoxCollider2D>();
+        Rigidbody2D rig = pTransform.gameObject.GetComponent<Rigidbody2D>();
+
+        renderer.enabled = false;
+        col.enabled = false;
+        rig.isKinematic = true;
+        while (true)
+        {
+            pTransform.position = Vector3.Lerp(pTransform.position,
+                 endPos,
+                 speed * Time.deltaTime);
+            if (pTransform.position == endPos)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+            Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
+            col.enabled = true;
+            rig.isKinematic = false;
+            yield return new WaitForSeconds(0.3f);
+
+            renderer.enabled = true;
+            porterOverride = false;
+     }
+
+    
 }

@@ -20,6 +20,13 @@ public class GumballBullet : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D c)
 	{
+        if (c.gameObject.tag == "Player")
+        {
+            Debug.Log("Hit Player");
+            Level_Manager.Instance.KillPlayer(c.transform);
+            Destroy(gameObject);   
+        }
+        
 		//if(c.gameObject.tag!= "Turret")
 			//Destroy(gameObject); //TODO: uncomment that later
 	}

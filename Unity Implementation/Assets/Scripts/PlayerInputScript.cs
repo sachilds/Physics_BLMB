@@ -44,6 +44,10 @@ public class PlayerInputScript : MonoBehaviour {
                 if (Player.IsGrounded && Input.GetAxis("P2.Jump") > 0) {
                     Player.Jump();
                 }
+                if (Input.GetButton("P2.HatMechanic"))
+                {
+                    Player.UseHatMechanic();
+                }
                 break;
             default:
                 break;

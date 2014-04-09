@@ -4,6 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(PlayerInputScript))]
 public class Player : Character 
 {
+    [HideInInspector]
+    public static Object spawningEffect;
 	[HideInInspector]
 	public PlayerInputScript playerInput;	//Reference to the players input script
 	public string nickname;					//Nickname to show up above head/scores/lives/etc.
@@ -24,6 +26,7 @@ public class Player : Character
 
 		playerInput = GetComponent<PlayerInputScript>();	//Get reference to PlayerInputScript component
         jelloBlock = Resources.Load("Prefabs/JELLO_CUBE") as GameObject;
+        spawningEffect = Resources.Load("Prefabs/PorterEffect") as GameObject;
         canSpawn = true;
         hatType = Hat.HatType.Jello_Spawn;
 	}

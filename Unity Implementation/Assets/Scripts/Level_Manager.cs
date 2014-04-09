@@ -3,27 +3,57 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Level_Manager : MonoBehaviour {
-    Segment_Script[] mTheSegments;
     public static Level_Manager Instance;
-    public int NumberOfPlayers = 2; // set this for now till we handle the mainmenu and setting up 2 players
+    public CheckPoint[] checkPoints;
+    public int currentSegment = 0;
+    [HideInInspector]
+    public Transform spawnPosition;
+
+    public Segment_Script[] mTheSegments;
+    
+    [HideInInspector]
+    public static int NumberOfPlayers = 2; // set this for now till we handle the mainmenu and setting up 2 players
+    [HideInInspector]
     public GameObject Player1, Player2;
-	// Use this for initialization
-	void Start () {
+	
+    void Start () {
         Player1 = GameObject.Find("Player1");
-        Player2 = GameObject.Find("Player2");
+
+        GameObject[] tempPoints = GameObject.FindGameObjectsWithTag("CheckPoint");
+        checkPoints = new CheckPoint[tempPoints.Length];
+        for (int i = 0; i < tempPoints.Length; i++)
+        {
+            checkPoints[i] = tempPoints[i].GetComponent<CheckPoint>();
+        }
+
+        if (NumberOfPlayers == 2)
+        {
+            Player2 = GameObject.Find("Player2");
+            Camera.main.GetComponent<CameraController>().camState = CameraState.TWO_PLAYER_FOLLOW;
+        }
+
         Instance = this;
         mTheSegments = new Segment_Script[3];
         mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
         mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
         mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
-        
+        spawnPosition = mTheSegments[0].defaultSpawn;
+
         mTheSegments[0].ResetSegments();
+        Debug.Log(spawnPosition.position.ToString());
 
        // StartCoroutine("BeginLevelPause");
 	}
-
+    public void resetCheckPoints()
+    {
+        foreach (CheckPoint c in checkPoints)
+        {
+            c.Deactivate();
+        }
+    }
     public void ChangeSegments(char lastSegment, char newSegment)
     {
+        resetCheckPoints();
         int prev = 0;
         int next = 0;
         switch (lastSegment)
@@ -56,10 +86,30 @@ public class Level_Manager : MonoBehaviour {
                 Debug.Log("the Segments need to be Labeled StageX, where X is the next index");
                 break;
         }
-        mTheSegments[prev].StartDropping();
-        mTheSegments[next].StartRising();
+        if (prev < next)
+        {
+            currentSegment++;
+            spawnPosition = mTheSegments[next].defaultSpawn;
+        }
+        else
+        {
+            currentSegment--;
+            spawnPosition = mTheSegments[next].defaultEndSpawn;
+        }
+        mTheSegments[prev].RemoveSegment();
+        mTheSegments[next].SpawnSegment();
+       
+
     }
 
+    public void KillPlayer(Transform pTransform)
+    {
+        StartCoroutine("TeleportPlayerToSpawn", pTransform);
+    }
+    public void setSpawnPos(Transform cTransform)
+    {
+        spawnPosition = cTransform;
+    }
     private IEnumerator BeginLevelPause()
     {
         Debug.Log("Running the pause");
@@ -69,4 +119,44 @@ public class Level_Manager : MonoBehaviour {
         
     }
 
+    public IEnumerator TeleportPlayerToSpawn(Transform pTransform)
+    {
+      
+        float warpSpeed = 30;
+        Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
+
+        SpriteRenderer renderer = pTransform.gameObject.GetComponent<SpriteRenderer>();
+        Collider2D col = pTransform.gameObject.GetComponent<BoxCollider2D>();
+        Rigidbody2D rig = pTransform.gameObject.GetComponent<Rigidbody2D>();
+
+        renderer.enabled = false;
+        col.enabled = false;
+        rig.isKinematic = true;
+
+
+        while (true)
+        {
+          
+            if (TeleportScript.porterOverride)
+                break;
+            pTransform.position = Vector3.Lerp(pTransform.position,
+                 spawnPosition.position,
+                 warpSpeed * Time.deltaTime);
+            if (pTransform.position == spawnPosition.position)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        if (!TeleportScript.porterOverride)
+        {
+            Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
+            col.enabled = true;
+            rig.isKinematic = false;
+            yield return new WaitForSeconds(0.1f);
+            renderer.enabled = true;
+
+        }
+    
+    }
 }
