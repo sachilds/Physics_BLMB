@@ -120,6 +120,7 @@ public class Hat : MonoBehaviour
             case HatType.Indian:
                 Debug.Log("Hi");
                 yield return new WaitForSeconds(2);
+                
                 canSpawn = true;
                 break;
             default:

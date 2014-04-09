@@ -98,8 +98,7 @@ public class Player : Character
         
         if (currentHat)
         {
-            Debug.Log("Using hat");
-            currentHat.StartMechanic();
+           currentHat.StartMechanic();
         }
     }
 
