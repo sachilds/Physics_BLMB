@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\GumballBullet.cs" />
      <Compile Include="Assets\Scripts\Hat.cs" />
      <Compile Include="Assets\Scripts\Level_Manager.cs" />
+     <Compile Include="Assets\Scripts\PatrollingEnemyAI.cs" />
      <Compile Include="Assets\Scripts\PhysicsEngine.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerInputScript.cs" />
