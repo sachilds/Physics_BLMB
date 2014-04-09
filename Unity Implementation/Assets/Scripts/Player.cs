@@ -25,6 +25,7 @@ public class Player : Character
         spawningEffect = Resources.Load("Prefabs/PorterEffect") as GameObject;
        
         spawningEffect = Resources.Load("Prefabs/portalEffect") as GameObject;
+       
         if (currentHat)
             hatType = currentHat.hatType;
 	}
@@ -64,6 +65,7 @@ public class Player : Character
     {
         if (c.tag == "Hat")
         {
+        
             hatInRange = true;
             closestHat = c.gameObject.GetComponent<Hat>();
         }
@@ -91,23 +93,12 @@ public class Player : Character
 
     }
    
-    /*private IEnumerator IndianHatAction()
+    public void UseHatMechanic()
     {
-        Debug.Log("P" + name[6] + ".HatMechanic");
-        while (Input.GetButton("P" + name[6] + ".HatMechanic"))
-        {
-            Debug.Log(name);
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-        canSpawn = true;
-        //yield return new WaitForSeconds(Time.deltaTime);
         
-    }*/
-
-    public void UseHatMechanic() 
-    {
         if (currentHat)
         {
+            Debug.Log("Using hat");
             StartCoroutine(currentHat.UseMechanic());
         }
     }
@@ -120,6 +111,7 @@ public class Player : Character
 
     public void AttachToPlayer()
     {
+        
         Hat.AttachToPlayer(gameObject.GetComponent<Player>(), closestHat);
         currentHat = closestHat;
         hatType = currentHat.hatType;

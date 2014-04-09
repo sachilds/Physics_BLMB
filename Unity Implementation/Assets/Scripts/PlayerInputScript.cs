@@ -41,9 +41,9 @@ public class PlayerInputScript : MonoBehaviour
                 {
                     Player.UseHatMechanic();
                 }
-                if (Input.GetButton("P1.Use"))
+                if (Input.GetButtonDown("P1.Use"))
                 {
-                    if (Player.hatInRange)
+                    if (Player.hatInRange && !Player.currentHat)
                         Player.AttachToPlayer();
                 }
                 break;
@@ -62,9 +62,9 @@ public class PlayerInputScript : MonoBehaviour
                 {
                     Player.UseHatMechanic();
                 }
-                if (Input.GetButton("P2.Use"))
+                if (Input.GetButtonDown("P2.Use"))
                 {
-                    if (Player.hatInRange)
+                    if (Player.hatInRange && !Player.currentHat)
                         Player.AttachToPlayer();
                 }
                 break;

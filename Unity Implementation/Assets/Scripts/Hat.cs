@@ -33,7 +33,7 @@ public class Hat : MonoBehaviour
     public CircleCollider2D trigger;
 
     //Editable values via Inspector
-    public int scale;						//Transform scale of the hat
+    public float scale;						//Transform scale of the hat
     public Sprite sprite;					//Image for the hat
 
     public GameObject jelloBlock;
@@ -78,6 +78,7 @@ public class Hat : MonoBehaviour
                 //scale = wearer.scale;
                 break;
             case HatType.Indian:
+                break;
             case HatType.Jello:
                 //scale = wearer.scale;
                 break;
@@ -89,7 +90,7 @@ public class Hat : MonoBehaviour
 
     public IEnumerator UseMechanic()
     {
-        Debug.Log("YOLO");
+        //Debug.Log("YOLO");
         switch (hatType)
         {
             case HatType.None:
@@ -106,6 +107,10 @@ public class Hat : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.5f);
                 canSpawn = true;
+                break;
+            case HatType.Indian:
+                Debug.Log("Hi");
+                
                 break;
             default:
                 break;
