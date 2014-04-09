@@ -2,21 +2,26 @@
 using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer))] 	//For visually rendering the hat
-[RequireComponent(typeof(Rigidbody2D))]		//Temporary for now
-[RequireComponent(typeof(BoxCollider2D))]	//Temporary for now
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Hat : MonoBehaviour 
 {
 	//Enumeration of every hat type possible
 	public enum HatType
 	{
 		None,
+<<<<<<< HEAD
 		OneHat,
 		AnotherHat,
         Indian_Hat,
         Jello_Spawn,
+=======
+        Jello,
+>>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
         Candy_Cannon
 	}
-	public static HatType hatType;
+	public HatType hatType;
 
 	[HideInInspector]
 	public Vector2 size;					//Width and height of the hat (pixels)
@@ -30,17 +35,24 @@ public class Hat : MonoBehaviour
 	public SpriteRenderer spriteRenderer;	//Renderer for the hat
 	[HideInInspector]
 	public BoxCollider2D boxCollider;
+    [HideInInspector]
+    public CircleCollider2D trigger;
 
 	//Editable values via Inspector
 	public int scale;						//Transform scale of the hat
 	public Sprite sprite;					//Image for the hat
 
-    private GameObject jelloBlock;
+    public GameObject jelloBlock;
+    private GameObject jelloInGame;
+    public GameObject cannonPrefab;
+    private GameObject cannonInGame;
+    private bool canSpawn;
+
 	private Character wearer;				//Reference to who is wearing the hat
 
 	void Awake() 
 	{
-		//wearer = GameObject.FindWithTag("Player");
+        canSpawn = true;
 
 		//Initialize some variables, load resources, etc.
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -53,10 +65,8 @@ public class Hat : MonoBehaviour
 		transform.localScale = new Vector3(scale, scale, scale);
 		
 		boxCollider = GetComponent<BoxCollider2D>();
-		boxCollider.size = new Vector2(size.x, size.y);
-		boxCollider.center = new Vector2(0, size.y / 2);
 
-        jelloBlock = Resources.Load("Prefabs/JELLO_BLOCK") as GameObject;
+        jelloBlock = Resources.Load("Prefabs/jelloBlock") as GameObject;
 	}
 	
 	void Update() 
@@ -74,30 +84,69 @@ public class Hat : MonoBehaviour
 		case HatType.None:
 			//scale = wearer.scale;
 			break;
+<<<<<<< HEAD
 		case HatType.OneHat:
 			//scale = wearer.scale;
 			break;
 		case HatType.Indian_Hat:
+=======
+        case HatType.Jello:
+>>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
 			//scale = wearer.scale;
 			break;
 		}
 	}
 
-    public void UseMechanic() {
-
-        switch (hatType) {
+    public IEnumerator UseMechanic()
+    {
+        switch (hatType) 
+        {
             case HatType.None:
                 break;
-            case HatType.OneHat:
-                break;
-            case HatType.Indian_Hat:
-                break;
-            case HatType.Jello_Spawn:
-                // Instantiate Jello
-                
+            case HatType.Jello:
+                if (!jelloInGame) {
+                    jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
+                }
+                else {
+                    Destroy(jelloInGame);
+                    jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
+                }
+                yield return new WaitForSeconds(0.5f);
+                canSpawn = true;
                 break;
             default:
                 break;
         }
+    }
+
+    public void CancelHatMechanic(Hat currentHat)
+    {
+        switch (hatType)
+        {
+            case Hat.HatType.None:
+                break;
+<<<<<<< HEAD
+            case HatType.Indian_Hat:
+=======
+            case Hat.HatType.Jello:
+                Destroy(currentHat.gameObject);
+>>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
+                break;
+            case Hat.HatType.Candy_Cannon:
+                Destroy(currentHat.gameObject);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void AttachToPlayer()
+    {
+
+    }
+
+    public void DetachFromPlayer()
+    {
+
     }
 }

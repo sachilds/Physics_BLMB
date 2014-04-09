@@ -10,25 +10,23 @@ public class Player : Character
 	public PlayerInputScript playerInput;	//Reference to the players input script
 	public string nickname;					//Nickname to show up above head/scores/lives/etc.
 
-
-    // TEMP delete later once hats are added
-    public GameObject jelloBlock;
-    private GameObject jelloInGame;
-
-    public GameObject cannonPrefab;
-    private GameObject cannonInGame;
-
+    public Hat currentHat;
     public Hat.HatType hatType;
-    private bool canSpawn;
 
 	void Awake() {
 		base.Awake();
 
 		playerInput = GetComponent<PlayerInputScript>();	//Get reference to PlayerInputScript component
+<<<<<<< HEAD
         jelloBlock = Resources.Load("Prefabs/JELLO_CUBE") as GameObject;
         spawningEffect = Resources.Load("Prefabs/PorterEffect") as GameObject;
         canSpawn = true;
        
+=======
+        spawningEffect = Resources.Load("Prefabs/portalEffect") as GameObject;
+        if (currentHat)
+            hatType = currentHat.hatType;
+>>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
 	}
 
 	void Update() {
@@ -54,9 +52,9 @@ public class Player : Character
 
     void OnTriggerEnter2D(Collider2D c) {
         // Check to see if it's on a sticky surface
-        if (c.tag == "SLIPPERY_SURFACE")
+        if (c.tag == "SlipperySurface")
             groundType = GroundType.SLIPPERY;
-        else if (c.tag == "STICKY_SURFACE")
+        else if (c.tag == "StickySurface")
             groundType = GroundType.STICKY;
 
         Debug.Log("Entered a trigger, tag was: " + c.tag);
@@ -68,7 +66,7 @@ public class Player : Character
     }
 
     void OnCollisionEnter2D(Collision2D c) {
-        if (c.gameObject.tag == "JELLO_BLOCK") { 
+        if (c.gameObject.tag == "JelloBlock") { 
             foreach(ContactPoint2D contact in c.contacts) {
                 if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope)
                 {
@@ -81,6 +79,7 @@ public class Player : Character
     }
 
     // TEMP till hats are added 
+<<<<<<< HEAD
     public void UseHatMechanic() {
         switch (hatType)
         {
@@ -156,5 +155,17 @@ public class Player : Character
             yield return new WaitForSeconds(0);
         }
 
+=======
+    public void UseHatMechanic() 
+    {
+        if (currentHat)
+            currentHat.UseMechanic();
+    }
+
+    public void CancelHatMechanic() 
+    {
+        if (currentHat)
+            currentHat.CancelHatMechanic(currentHat);
+>>>>>>> 285b5b95b3f4640e32fd6dd302f7af46a884847b
     }
 }

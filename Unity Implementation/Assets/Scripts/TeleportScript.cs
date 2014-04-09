@@ -18,20 +18,23 @@ public class TeleportScript : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D c)
     {
-        if (c.GetComponent<SpriteRenderer>().enabled)
+        if (c.GetComponent<SpriteRenderer>())
         {
-            if (c.tag == "Player" && PorterType == TeleporterType.Within_Stage)
+            if (c.GetComponent<SpriteRenderer>().enabled)
             {
-                MovingTransform = c.transform;
-                StartCoroutine("TeleportPlayerWithin", c.transform);
-            }
-            if (c.tag == "Player" && PorterType == TeleporterType.StageTransition)
-            {//could not for the life of me convert the char '1' from Stage1 to an int so did this
-                char temp = name[5];
-                char temp2 = WarpToPortal.name[5];
-               Level_Manager.Instance.ChangeSegments(temp, temp2);
-                StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player1.transform);
-               StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player2.transform);
+                if (c.tag == "Player" && PorterType == TeleporterType.Within_Stage)
+                {
+                    MovingTransform = c.transform;
+                    StartCoroutine("TeleportPlayerWithin", c.transform);
+                }
+                if (c.tag == "Player" && PorterType == TeleporterType.StageTransition)
+                {//could not for the life of me convert the char '1' from Stage1 to an int so did this
+                    char temp = name[5];
+                    char temp2 = WarpToPortal.name[5];
+                    Level_Manager.Instance.ChangeSegments(temp, temp2);
+                    StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player1.transform);
+                    StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player2.transform);
+                }
             }
         }
 

@@ -50,8 +50,6 @@ public class Character : MonoBehaviour
 		transform.localScale = new Vector3(scale, scale, scale);
 
 		boxCollider = GetComponent<BoxCollider2D>();
-		boxCollider.size = new Vector2(size.x, size.y);
-		boxCollider.center = new Vector2(0, size.y / 2);
 	}
 
 	public virtual void Update() 
