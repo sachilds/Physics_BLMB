@@ -90,7 +90,7 @@ public class Hat : MonoBehaviour
 
     public IEnumerator UseMechanic()
     {
-        //Debug.Log("YOLO");
+        Debug.Log("YOLO");
         switch (hatType)
         {
             case HatType.None:
