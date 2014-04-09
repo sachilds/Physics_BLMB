@@ -139,8 +139,8 @@ public class Hat : MonoBehaviour
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
                 GameObject go = Instantiate(stonePrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, mechanicSpawn.transform.position.y), 
-                                           new Quaternion(0,0, 0, 1)) as GameObject;
-                
+                                           new Quaternion(0,wearer.transform.rotation.y, 45, 1)) as GameObject;
+                go.GetComponent<Rigidbody2D>().AddForce(new Vector2(initialVelocity.x, initialVelocity.y));
                 Debug.Log(go.name);
                 Debug.Log("Broke out");
                 
