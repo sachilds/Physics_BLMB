@@ -78,10 +78,12 @@ public class Character : MonoBehaviour
 
             // Apply the forces to the object
             if (axisValue < -0.1f) { // going left
+                transform.rotation = new Quaternion(0, 180, 0, 1);
                 axisValue *= -500;
 				//axisValue *= 500;
                 rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * -1 * Time.deltaTime, 0));
             } else if(axisValue > 0.1f) { // going right
+                transform.rotation = new Quaternion(0, 0, 0, 1);
 				//axisValue *= 500;
                 rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * Time.deltaTime, 0));
             }

@@ -87,9 +87,18 @@ public class Hat : MonoBehaviour
         if (wearer)
             transform.position = wearer.hatHolder.position;
     }
-
+    public void StartMechanic()
+    {
+        if (canSpawn)
+        {
+            canSpawn = false;
+            StartCoroutine("UseMechanic");
+        }
+      
+    }
     public IEnumerator UseMechanic()
     {
+        
         Debug.Log("YOLO");
         switch (hatType)
         {
@@ -110,7 +119,8 @@ public class Hat : MonoBehaviour
                 break;
             case HatType.Indian:
                 Debug.Log("Hi");
-                
+                yield return new WaitForSeconds(2);
+                canSpawn = true;
                 break;
             default:
                 break;
@@ -138,6 +148,7 @@ public class Hat : MonoBehaviour
     public static void AttachToPlayer(Player player, Hat newHat)
     {
         newHat.wearer = player;
+        newHat.transform.rotation = new Quaternion(0, 0, 0, 1);
         newHat.rigidbody2D.isKinematic = true;
         newHat.collider2D.enabled = false;
         newHat.transform.position = player.hatHolder.position;

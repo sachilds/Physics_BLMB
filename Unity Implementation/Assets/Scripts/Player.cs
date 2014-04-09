@@ -99,7 +99,7 @@ public class Player : Character
         if (currentHat)
         {
             Debug.Log("Using hat");
-            StartCoroutine(currentHat.UseMechanic());
+            currentHat.StartMechanic();
         }
     }
 
