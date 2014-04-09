@@ -36,6 +36,10 @@ public class Hat : MonoBehaviour
     public float scale;						//Transform scale of the hat
     public Sprite sprite;					//Image for the hat
 
+    public Transform mechanicSpawn;
+
+    private GameObject stoneInGame;
+    public GameObject stonePrefab;
     public GameObject jelloBlock;
     private GameObject jelloInGame;
     public GameObject cannonPrefab;
@@ -53,6 +57,7 @@ public class Hat : MonoBehaviour
         spriteRenderer.sprite = sprite;
         spriteRenderer.sortingLayerName = "Equipted";
 
+        
         size = new Vector2(sprite.rect.width / 100, sprite.rect.height / 100);
         position = new Vector2(transform.position.x, transform.position.y);
         boundingRect = new Rect(position.x, position.y, size.x, size.y);
@@ -118,8 +123,26 @@ public class Hat : MonoBehaviour
                 canSpawn = true;
                 break;
             case HatType.Indian:
-                Debug.Log("Hi");
-                yield return new WaitForSeconds(2);
+                float MAX_CHARGE = 300;
+                float chargeRate = 3;
+                float fireAngle = 45;
+                Vector2 initialVelocity = Vector2.zero;
+                while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
+                {
+                    initialVelocity.x += chargeRate;
+                    initialVelocity.y += chargeRate;
+                    
+                    if (initialVelocity.x > MAX_CHARGE)
+                    {
+                        break;
+                    }
+                    yield return new WaitForSeconds(Time.deltaTime);
+                }
+                GameObject go = Instantiate(stonePrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, mechanicSpawn.transform.position.y), 
+                                           new Quaternion(0,0, 0, 1)) as GameObject;
+                
+                Debug.Log(go.name);
+                Debug.Log("Broke out");
                 
                 canSpawn = true;
                 break;
