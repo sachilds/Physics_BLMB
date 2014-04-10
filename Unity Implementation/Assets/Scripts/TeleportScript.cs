@@ -47,13 +47,18 @@ public class TeleportScript : MonoBehaviour {
         Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
         
         SpriteRenderer renderer = pTransform.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer[] hRenderer = pTransform.GetComponentsInChildren<SpriteRenderer>();
+
         Collider2D col = pTransform.gameObject.GetComponent<BoxCollider2D>();
         Rigidbody2D rig = pTransform.gameObject.GetComponent<Rigidbody2D>();
 
         renderer.enabled = false;
         col.enabled = false;
         rig.isKinematic = true;
-      
+        foreach (SpriteRenderer sr in hRenderer)
+        {
+            sr.enabled = false;
+        }
 
         while (true)
         {
@@ -74,6 +79,10 @@ public class TeleportScript : MonoBehaviour {
             rig.isKinematic = false;
             yield return new WaitForSeconds(0.1f);
             if (!porterOverride) renderer.enabled = true;
+            foreach (SpriteRenderer sr in hRenderer)
+            {
+                sr.enabled = true;
+            }
 
         }
                
@@ -97,6 +106,13 @@ public class TeleportScript : MonoBehaviour {
         Collider2D col = pTransform.gameObject.GetComponent<BoxCollider2D>();
         Rigidbody2D rig = pTransform.gameObject.GetComponent<Rigidbody2D>();
 
+        SpriteRenderer[] hRenderer = pTransform.GetComponentsInChildren<SpriteRenderer>();
+
+        foreach (SpriteRenderer sr in hRenderer)
+        {
+            sr.enabled = false;
+        }
+
         renderer.enabled = false;
         col.enabled = false;
         rig.isKinematic = true;
@@ -116,7 +132,10 @@ public class TeleportScript : MonoBehaviour {
             col.enabled = true;
             rig.isKinematic = false;
             yield return new WaitForSeconds(0.3f);
-
+            foreach (SpriteRenderer sr in hRenderer)
+            {
+                sr.enabled = true;
+            }
             renderer.enabled = true;
             porterOverride = false;
      }

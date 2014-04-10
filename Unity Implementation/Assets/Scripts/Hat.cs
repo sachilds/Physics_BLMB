@@ -123,27 +123,45 @@ public class Hat : MonoBehaviour
                 canSpawn = true;
                 break;
             case HatType.Indian:
-                float MAX_CHARGE = 300;
-                float chargeRate = 3;
-                float fireAngle = 45;
-                Vector2 initialVelocity = Vector2.zero;
+                float MAX_CHARGE_X = 200;
+                float MAX_CHARGE_Y = 350;
+                float chargeRate = 15;
+                
+                Vector2 initialVelocity = new Vector2(25,25);
                 while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
                 {
-                    initialVelocity.x += chargeRate;
-                    initialVelocity.y += chargeRate;
                     
-                    if (initialVelocity.x > MAX_CHARGE)
+                    //plot
+                    //RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
+                    Debug.DrawLine(transform.root.position, new Vector2(transform.root.position.x + 10, transform.root.position.y + 10), Color.green);
+                  
+                    initialVelocity.y += chargeRate;
+                    if(initialVelocity.x < MAX_CHARGE_X) initialVelocity.x += chargeRate;
+                    
+                    if (initialVelocity.y > MAX_CHARGE_Y)
                     {
+                       
                         break;
                     }
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
                 GameObject go = Instantiate(stonePrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, mechanicSpawn.transform.position.y), 
-                                           new Quaternion(0,wearer.transform.rotation.y, 45, 1)) as GameObject;
-                go.GetComponent<Rigidbody2D>().AddForce(new Vector2(initialVelocity.x, initialVelocity.y));
-                Debug.Log(go.name);
-                Debug.Log("Broke out");
+                                           new Quaternion(0,0, 0, 1)) as GameObject;
+                int dir = 0;
+                if (wearer.transform.rotation.y == 0)
+                {
+                    dir = 1;
+                }
+                else dir = -1;
                 
+                go.GetComponent<Rigidbody2D>().AddForce(new Vector2(initialVelocity.x * dir, initialVelocity.y));
+                go.GetComponent<Rigidbody2D>().AddTorque(25);
+                GameObject.Destroy(go, 2);
+
+                Debug.Log("Broke out");
+
+                yield return new WaitForSeconds(Time.deltaTime);
+
                 canSpawn = true;
                 break;
             default:
@@ -151,6 +169,16 @@ public class Hat : MonoBehaviour
         }
     }
 
+    //public Vector3 PlotTrajectoryAtTime(Vector2 start, Vector2 startVel, float time)
+    //{
+    //    // s = vi*t + (at^2)/2
+    //    return start + startVel * time + (Physics2D.gravity * Mathf.Pow(time, 2) / 2);
+    //}
+
+    //public void PlotTrajectory(Vector2 start, Vector2 startVel, float timeStep, float maxTime)
+    //{
+
+    //}
     public void CancelHatMechanic(Hat currentHat)
     {
         switch (hatType)

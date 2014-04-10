@@ -9,14 +9,16 @@ public enum CameraState
 }
 public class CameraController : MonoBehaviour
 {
-    [HideInInspector]
-    public CameraState camState = CameraState.TWO_PLAYER_FOLLOW;
+   
+    public CameraState camState;
     // The targets the camera is following
     [HideInInspector]
     public Transform[] target;
     private float distance;
 
     //1Player values
+    private float ScrollSpeed = 4;
+    public float soloMinDis = 10;
     //private Vector2 origin = new Vector2();
 
     //2Player values
@@ -31,8 +33,16 @@ public class CameraController : MonoBehaviour
     {
         target = new Transform[2];
         target[0] = GameObject.Find("Player1").transform;
-        target[1] = GameObject.Find("Player2").transform;
-      
+        if (camState == CameraState.TWO_PLAYER_FOLLOW)
+        {
+            target[1] = GameObject.Find("Player2").transform;
+        }
+        else if (camState == CameraState.ONE_PLAYER_FOLLOW)
+        {
+            transform.position = new Vector3(target[0].transform.position.x, 
+                                              target[0].transform.position.y,
+                                              transform.position.z);
+        }
         distance = closestZoom;
     }
     void LateUpdate()
@@ -44,18 +54,49 @@ public class CameraController : MonoBehaviour
             return;
         }
 
+        Vector2 disBetweenAB;
+        float distanceMagnitude;
 
         switch (camState)
         {
+
             case CameraState.ONE_PLAYER_FOLLOW:
-                Debug.Log("One Player Camera not implemented yet");
+                float MAX_X = 1.5f;
+                float MAX_Y = 1.5f;
+                float xMovement = 0;
+                float yMovement = 0;
+            //Debug.Log("One Player Camera not implemented yet");
+                
+                disBetweenAB = new Vector2(target[0].position.x - transform.position.x, target[0].position.y - transform.position.y);
+               if(disBetweenAB.x > MAX_X)
+               {
+                   xMovement = disBetweenAB.x - MAX_X;
+               }
+               else if (disBetweenAB.x < -MAX_X)
+               {
+                   xMovement = disBetweenAB.x + MAX_X;
+               }
+               if (disBetweenAB.y > MAX_Y)
+               {
+                   yMovement = disBetweenAB.y - MAX_Y;
+               }
+               else if (disBetweenAB.y < -MAX_Y)
+               {
+                   yMovement = disBetweenAB.y + MAX_Y;
+               }
+
+                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x + xMovement, 
+                                                                                  transform.position.y + yMovement,
+                                                                                  -soloMinDis), Time.deltaTime * ScrollSpeed);
+              
                 break;
             case CameraState.TWO_PLAYER_FOLLOW:
+               
                 //some vector math
-                Vector2 disBetweenAB = new Vector3(target[1].position.x - target[0].position.x,
+                disBetweenAB = new Vector3(target[1].position.x - target[0].position.x,
                                                    target[1].position.y - target[0].position.y);
                 //getting magnitue of player1 to player 2
-                float distanceMagnitude = Mathf.Sqrt(Mathf.Pow(disBetweenAB.x, 2) + Mathf.Pow(disBetweenAB.y, 2));
+                distanceMagnitude = Mathf.Sqrt(Mathf.Pow(disBetweenAB.x, 2) + Mathf.Pow(disBetweenAB.y, 2));
 
                 if (distanceMagnitude >= minDistance)
                 {

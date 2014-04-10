@@ -4,15 +4,17 @@ using System.Collections.Generic;
 
 public class Level_Manager : MonoBehaviour {
     public static Level_Manager Instance;
+    [HideInInspector]
     public CheckPoint[] checkPoints;
+    [HideInInspector]
     public int currentSegment = 0;
     [HideInInspector]
     public Transform spawnPosition;
-
+    [HideInInspector]
     public Segment_Script[] mTheSegments;
     
     [HideInInspector]
-    public static int NumberOfPlayers = 2; // set this for now till we handle the mainmenu and setting up 2 players
+    public static int NumberOfPlayers = 1; // set this for now till we handle the mainmenu and setting up 2 players
     [HideInInspector]
     public GameObject Player1, Player2;
 	
@@ -29,18 +31,27 @@ public class Level_Manager : MonoBehaviour {
         if (NumberOfPlayers == 2)
         {
             Player2 = GameObject.Find("Player2");
-            Camera.main.GetComponent<CameraController>().camState = CameraState.TWO_PLAYER_FOLLOW;
+            mTheSegments = new Segment_Script[5];
+            mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
+            mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
+            mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
+            mTheSegments[3] = GameObject.Find("Stage4").GetComponent<Segment_Script>();
+            mTheSegments[4] = GameObject.Find("Stage5").GetComponent<Segment_Script>();
+        }
+        else
+        {
+            mTheSegments = new Segment_Script[3];
+            mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
+            mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
+            mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
         }
 
         Instance = this;
-        mTheSegments = new Segment_Script[3];
-        mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
-        mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
-        mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
+        
         spawnPosition = mTheSegments[0].defaultSpawn;
 
         mTheSegments[0].ResetSegments();
-        Debug.Log(spawnPosition.position.ToString());
+        
 
        // StartCoroutine("BeginLevelPause");
 	}
@@ -67,6 +78,12 @@ public class Level_Manager : MonoBehaviour {
             case '3':
                 prev = 2;
                 break;
+            case '4':
+                prev = 3;
+                break;
+            case '5':
+                prev = 4;
+                break;
             default:
                 Debug.Log("the Segments need to be Labeled StageX, where X is the next index");
                 break;
@@ -82,13 +99,20 @@ public class Level_Manager : MonoBehaviour {
             case '3':
                 next = 2;
                 break;
+            case '4':
+                next = 3;
+                break;
+            case '5':
+                next = 4;
+                break;
             default:
                 Debug.Log("the Segments need to be Labeled StageX, where X is the next index");
                 break;
         }
+        Debug.Log("prev " + prev + " next " + next);
         if (prev < next)
         {
-            currentSegment++;
+           currentSegment++;
             spawnPosition = mTheSegments[next].defaultSpawn;
         }
         else
