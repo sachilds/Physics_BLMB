@@ -1,16 +1,12 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MovingPlatform.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PlaySoundEffect.cs">
     <Files>
-      <File FileName="Assets\Scripts\MovingPlatform.cs" Line="4" Column="1" />
-=======
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PatrollingEnemyAI.cs">
-    <Files>
-      <File FileName="Assets\Scripts\PatrollingEnemyAI.cs" Line="124" Column="16" />
       <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
->>>>>>> 56b069822f9d40959d526b2c10ca404028c6bfdb
+      <File FileName="Assets\Scripts\PlayerInputScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GumballBullet.cs" Line="25" Column="37" />
+      <File FileName="Assets\Scripts\Level_Manager.cs" Line="1" Column="1" />
+      <File FileName="Assets\PlaySoundEffect.cs" Line="18" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
