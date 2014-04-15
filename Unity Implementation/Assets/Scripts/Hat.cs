@@ -13,6 +13,7 @@ public class Hat : MonoBehaviour
         None,
         Indian,
         Jello,
+        Lollicopter,
         CandyCannon
     }
     public HatType hatType;
@@ -87,6 +88,8 @@ public class Hat : MonoBehaviour
             case HatType.Jello:
                 //scale = wearer.scale;
                 break;
+            case HatType.Lollicopter:
+                break;
         }
 
         if (wearer)
@@ -109,6 +112,7 @@ public class Hat : MonoBehaviour
         {
             case HatType.None:
                 break;
+            
             case HatType.Jello:
                 if (!jelloInGame)
                 {
@@ -122,6 +126,7 @@ public class Hat : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
                 canSpawn = true;
                 break;
+            
             case HatType.Indian:
                 float MAX_CHARGE_X = 200;
                 float MAX_CHARGE_Y = 350;
@@ -164,6 +169,13 @@ public class Hat : MonoBehaviour
 
                 canSpawn = true;
                 break;
+            
+            case HatType.Lollicopter:
+                wearer.SendMessage("Lollicopter");
+                yield return new WaitForSeconds(0.7f);
+                canSpawn = true;
+                break;
+           
             default:
                 break;
         }
@@ -183,13 +195,18 @@ public class Hat : MonoBehaviour
     {
         switch (hatType)
         {
-            case Hat.HatType.None:
+            case HatType.None:
                 break;
             case HatType.Indian:
-            case Hat.HatType.Jello:
+            case HatType.Jello:
+                Destroy(currentHat.gameObject);
+                if (jelloInGame)
+                    Destroy(jelloInGame);
+                break;
+            case HatType.CandyCannon:
                 Destroy(currentHat.gameObject);
                 break;
-            case Hat.HatType.CandyCannon:
+            case HatType.Lollicopter:
                 Destroy(currentHat.gameObject);
                 break;
             default:

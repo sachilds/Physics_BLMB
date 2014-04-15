@@ -1,0 +1,30 @@
+JOBS TO BE DONE:
+
+Cass
+- Options Screen
+- Credits
+- Enemy AI
+- Sound
+- Backgrounds
+
+Deanna
+- Hat collecting
+- Pause Menu
+- Tiles
+- Hats (Jello, Boat, Cannon)
+- Gumball Turret
+
+Justin
+- Tiles w/ Deanna
+- 2 player select screen
+- End level screen
+
+Brian
+- Using hat mechanics (Input)
+- Fix teleporters
+- Death spawn
+- Teleporter art
+
+Sarah
+- Showdown
+- Hat Mechanics (Jello, Lolicopter, Boat, Cannon)
