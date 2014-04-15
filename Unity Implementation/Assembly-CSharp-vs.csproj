@@ -56,6 +56,7 @@
      <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_ShurikenThreadFix.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX\Spawn System\CFX_SpawnSystem.cs" />
+     <Compile Include="Assets\PlaySoundEffect.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\CandyCloudAI.cs" />
      <Compile Include="Assets\Scripts\CandyCornAI.cs" />
@@ -66,6 +67,7 @@
      <Compile Include="Assets\Scripts\GumballBullet.cs" />
      <Compile Include="Assets\Scripts\Hat.cs" />
      <Compile Include="Assets\Scripts\Level_Manager.cs" />
+     <Compile Include="Assets\Scripts\MovingPlatform.cs" />
      <Compile Include="Assets\Scripts\MovingTexture.cs" />
      <Compile Include="Assets\Scripts\Obstacle.cs" />
      <Compile Include="Assets\Scripts\PatrollingEnemyAI.cs" />
