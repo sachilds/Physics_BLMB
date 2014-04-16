@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\Game_Manager.cs" />
      <Compile Include="Assets\Scripts\GumballBullet.cs" />
      <Compile Include="Assets\Scripts\Hat.cs" />
+     <Compile Include="Assets\Scripts\HookerScript.cs" />
      <Compile Include="Assets\Scripts\Level_Manager.cs" />
      <Compile Include="Assets\Scripts\MovingPlatform.cs" />
      <Compile Include="Assets\Scripts\MovingTexture.cs" />

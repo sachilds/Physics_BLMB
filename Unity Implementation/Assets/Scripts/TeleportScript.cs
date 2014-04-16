@@ -33,7 +33,8 @@ public class TeleportScript : MonoBehaviour {
                     char temp2 = WarpToPortal.name[5];
                     Level_Manager.Instance.ChangeSegments(temp, temp2);
                     StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player1.transform);
-                    StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player2.transform);
+                    if(Level_Manager.NumberOfPlayers == 2)
+                        StartCoroutine("TeleportPlayerToNext", Level_Manager.Instance.Player2.transform);
                 }
             }
         }
