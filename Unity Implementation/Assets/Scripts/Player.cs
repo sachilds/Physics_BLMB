@@ -18,6 +18,8 @@ public class Player : Character
     public Transform hatHolder;
     public Hat.HatType hatType;
 
+    private const int CAP_MAX_HEIGHT = 15;
+
 	void Awake() {
 		base.Awake();
 
@@ -47,8 +49,16 @@ public class Player : Character
 
     private void Bounce() {
         IsGrounded = false;
+        if (maxHeight > CAP_MAX_HEIGHT)
+            maxHeight = CAP_MAX_HEIGHT;
         float Force = PhysicsEngine.CalculateVerticalBounce(maxHeight, mass);
         rigidbody2D.AddForce(new Vector2(0, Force * Time.deltaTime));
+    }
+
+    private void Lollicopter() {
+        if (!IsGrounded) {
+            rigidbody2D.AddForce(new Vector2(0, 400));
+        }
     }
 
     void OnTriggerEnter2D(Collider2D c) {
@@ -65,7 +75,6 @@ public class Player : Character
     {
         if (c.tag == "Hat")
         {
-        
             hatInRange = true;
             closestHat = c.gameObject.GetComponent<Hat>();
         }
@@ -83,10 +92,8 @@ public class Player : Character
     void OnCollisionEnter2D(Collision2D c) {
         if (c.gameObject.tag == "JelloBlock") { 
             foreach(ContactPoint2D contact in c.contacts) {
-                if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope)
-                {
+                if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope) {
                     Bounce();
-                    Debug.Log("I hit a block");
                 }
 		    }
         }
@@ -95,7 +102,6 @@ public class Player : Character
    
     public void UseHatMechanic()
     {
-        
         if (currentHat)
         {
            currentHat.StartMechanic();

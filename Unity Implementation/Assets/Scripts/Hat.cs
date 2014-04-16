@@ -13,8 +13,13 @@ public class Hat : MonoBehaviour
         None,
         Indian,
         Jello,
+<<<<<<< HEAD
         CandyCannon,
         HookerHat,
+=======
+        Lollicopter,
+        CandyCannon
+>>>>>>> 80676ef0104dc0e248e7c3cc12241585e7b243c3
     }
     public HatType hatType;
 
@@ -90,7 +95,11 @@ public class Hat : MonoBehaviour
             case HatType.Jello:
                 //scale = wearer.scale;
                 break;
+<<<<<<< HEAD
             case HatType.HookerHat:
+=======
+            case HatType.Lollicopter:
+>>>>>>> 80676ef0104dc0e248e7c3cc12241585e7b243c3
                 break;
         }
 
@@ -114,6 +123,7 @@ public class Hat : MonoBehaviour
         {
             case HatType.None:
                 break;
+            
             case HatType.Jello:
                 if (!jelloInGame)
                 {
@@ -127,6 +137,7 @@ public class Hat : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
                 canSpawn = true;
                 break;
+            
             case HatType.Indian:
                 float MAX_CHARGE_X = 200;
                 float MAX_CHARGE_Y = 350;
@@ -169,6 +180,7 @@ public class Hat : MonoBehaviour
 
                 canSpawn = true;
                 break;
+<<<<<<< HEAD
             case HatType.HookerHat:
                 GameObject hookInGame = Instantiate(hookPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
                                           new Quaternion(0, 0, 0, 1)) as GameObject;
@@ -194,6 +206,15 @@ public class Hat : MonoBehaviour
                 GameObject.DestroyObject(hookInGame);
                 canSpawn = true;
                 break;
+=======
+            
+            case HatType.Lollicopter:
+                wearer.SendMessage("Lollicopter");
+                yield return new WaitForSeconds(0.7f);
+                canSpawn = true;
+                break;
+           
+>>>>>>> 80676ef0104dc0e248e7c3cc12241585e7b243c3
             default:
                 break;
         }
@@ -213,13 +234,18 @@ public class Hat : MonoBehaviour
     {
         switch (hatType)
         {
-            case Hat.HatType.None:
+            case HatType.None:
                 break;
             case HatType.Indian:
-            case Hat.HatType.Jello:
+            case HatType.Jello:
+                Destroy(currentHat.gameObject);
+                if (jelloInGame)
+                    Destroy(jelloInGame);
+                break;
+            case HatType.CandyCannon:
                 Destroy(currentHat.gameObject);
                 break;
-            case Hat.HatType.CandyCannon:
+            case HatType.Lollicopter:
                 Destroy(currentHat.gameObject);
                 break;
             default:
