@@ -13,13 +13,10 @@ public class Hat : MonoBehaviour
         None,
         Indian,
         Jello,
-<<<<<<< HEAD
         CandyCannon,
         HookerHat,
-=======
         Lollicopter,
-        CandyCannon
->>>>>>> 80676ef0104dc0e248e7c3cc12241585e7b243c3
+       
     }
     public HatType hatType;
 
@@ -95,11 +92,11 @@ public class Hat : MonoBehaviour
             case HatType.Jello:
                 //scale = wearer.scale;
                 break;
-<<<<<<< HEAD
+
             case HatType.HookerHat:
-=======
+
             case HatType.Lollicopter:
->>>>>>> 80676ef0104dc0e248e7c3cc12241585e7b243c3
+
                 break;
         }
 
@@ -180,7 +177,7 @@ public class Hat : MonoBehaviour
 
                 canSpawn = true;
                 break;
-<<<<<<< HEAD
+
             case HatType.HookerHat:
                 GameObject hookInGame = Instantiate(hookPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
                                           new Quaternion(0, 0, 0, 1)) as GameObject;
@@ -206,7 +203,7 @@ public class Hat : MonoBehaviour
                 GameObject.DestroyObject(hookInGame);
                 canSpawn = true;
                 break;
-=======
+
             
             case HatType.Lollicopter:
                 wearer.SendMessage("Lollicopter");
@@ -214,7 +211,7 @@ public class Hat : MonoBehaviour
                 canSpawn = true;
                 break;
            
->>>>>>> 80676ef0104dc0e248e7c3cc12241585e7b243c3
+
             default:
                 break;
         }

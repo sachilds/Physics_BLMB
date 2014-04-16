@@ -28,9 +28,9 @@ public class Level_Manager : MonoBehaviour {
             checkPoints[i] = tempPoints[i].GetComponent<CheckPoint>();
         }
 
-        if (NumberOfPlayers == 2)
+        if (Player2 = GameObject.Find("Player2"))
         {
-            Player2 = GameObject.Find("Player2");
+            NumberOfPlayers++;
             mTheSegments = new Segment_Script[5];
             mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
             mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
