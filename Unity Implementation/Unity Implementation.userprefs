@@ -1,9 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerSelect.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Hat.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerSelect.cs" Line="21" Column="21" />
-      <File FileName="Assets\Scripts\PlayerSelect.cs" Line="36" Column="1" />
+      <File FileName="Assets\Scripts\Hat.cs" Line="220" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
