@@ -17,8 +17,7 @@ public class Level_Manager : MonoBehaviour {
     public static int NumberOfPlayers = 1; // set this for now till we handle the mainmenu and setting up 2 players
     [HideInInspector]
     public GameObject Player1, Player2;
-	
-    void Start () {
+	void Start () {
         Player1 = GameObject.Find("Player1");
 
         GameObject[] tempPoints = GameObject.FindGameObjectsWithTag("CheckPoint");
@@ -125,7 +124,6 @@ public class Level_Manager : MonoBehaviour {
        
 
     }
-
     public void KillPlayer(Transform pTransform)
     {
         StartCoroutine("TeleportPlayerToSpawn", pTransform);
@@ -142,7 +140,6 @@ public class Level_Manager : MonoBehaviour {
         Debug.Log("Stopping the pause");
         
     }
-
     public IEnumerator TeleportPlayerToSpawn(Transform pTransform)
     {
       
