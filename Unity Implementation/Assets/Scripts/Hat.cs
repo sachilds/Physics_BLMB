@@ -14,7 +14,8 @@ public class Hat : MonoBehaviour
         Indian,
         Jello,
         Lollicopter,
-        CandyCannon
+        CandyCannon,
+        Boat
     }
     public HatType hatType;
 
@@ -41,10 +42,12 @@ public class Hat : MonoBehaviour
 
     private GameObject stoneInGame;
     public GameObject stonePrefab;
-    public GameObject jelloBlock;
+    public GameObject jelloPrefab;
     private GameObject jelloInGame;
     public GameObject cannonPrefab;
     private GameObject cannonInGame;
+    public GameObject boatPrefab;
+    private GameObject boatInGame;
     private bool canSpawn;
 
     private Player wearer;				//Reference to who is wearing the hat
@@ -90,10 +93,12 @@ public class Hat : MonoBehaviour
                 break;
             case HatType.Lollicopter:
                 break;
+            case HatType.Boat:
+                break;
         }
 
         if (wearer)
-            transform.position = wearer.hatHolder.position;
+            transform.position = new Vector3(wearer.hatHolder.position.x, wearer.hatHolder.position.y, -0.1f);
     }
     public void StartMechanic()
     {
@@ -114,15 +119,10 @@ public class Hat : MonoBehaviour
                 break;
             
             case HatType.Jello:
-                if (!jelloInGame)
-                {
-                    jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
-                }
-                else
-                {
+                if (jelloInGame)
                     Destroy(jelloInGame);
-                    jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
-                }
+
+                jelloInGame = Instantiate(jelloPrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, 0), mechanicSpawn.rotation) as GameObject;
                 yield return new WaitForSeconds(0.5f);
                 canSpawn = true;
                 break;
@@ -134,8 +134,7 @@ public class Hat : MonoBehaviour
                 
                 Vector2 initialVelocity = new Vector2(25,25);
                 while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
-                {
-                    
+                {                    
                     //plot
                     //RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
                     Debug.DrawLine(transform.root.position, new Vector2(transform.root.position.x + 10, transform.root.position.y + 10), Color.green);
@@ -143,15 +142,13 @@ public class Hat : MonoBehaviour
                     initialVelocity.y += chargeRate;
                     if(initialVelocity.x < MAX_CHARGE_X) initialVelocity.x += chargeRate;
                     
-                    if (initialVelocity.y > MAX_CHARGE_Y)
-                    {
-                       
+                    if (initialVelocity.y > MAX_CHARGE_Y) {
                         break;
                     }
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
                 GameObject go = Instantiate(stonePrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, mechanicSpawn.transform.position.y), 
-                                           new Quaternion(0,0, 0, 1)) as GameObject;
+                                           mechanicSpawn.rotation) as GameObject; //new Quaternion(0,0, 0, 1)
                 int dir = 0;
                 if (wearer.transform.rotation.y == 0)
                 {
@@ -176,6 +173,14 @@ public class Hat : MonoBehaviour
                 canSpawn = true;
                 break;
            
+            case HatType.Boat:
+                if(boatInGame)
+                    Destroy(boatInGame);
+
+                boatInGame = Instantiate(boatPrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, 0), mechanicSpawn.rotation) as GameObject;
+                yield return new WaitForSeconds(0.5f);
+                canSpawn = true;
+                break;
             default:
                 break;
         }
