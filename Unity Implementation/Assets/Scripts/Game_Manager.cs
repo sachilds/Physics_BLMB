@@ -48,6 +48,27 @@ public class Game_Manager : MonoBehaviour {
         {
             //MAIN MENU
             case GameState.Menu:
+				//New Game
+				if (Main_Menu_GUI.menuStatus.Equals("Play"))
+			    {
+					//PlayMenu();
+					Debug.Log("Play the Game - Continue from the XML File");
+					//gameState = GameState.InGame;
+					//LoadNewScreen("DemoLevel");
+				}
+				//Options
+				if (Main_Menu_GUI.menuStatus.Equals("Options")) {
+					//PlayMenu();
+					Debug.Log("Open the Options");
+					//gameState = GameState.Options;
+				}
+				if (Main_Menu_GUI.menuStatus.Equals("Quit")) {
+					//PlayMenu();
+					Debug.Log("Quit the Game");
+					//Application.Quit();
+				}
+				//Quit
+				/*
                 GUI.Label(GetMenuLogo(), "BLB");
                 GUI.BeginGroup(GetMainMenu());
                 //New Game
@@ -73,6 +94,7 @@ public class Game_Manager : MonoBehaviour {
                     Application.Quit();
                 }
                 GUI.EndGroup();
+                */
                 break;
 
             //IN-GAME	
