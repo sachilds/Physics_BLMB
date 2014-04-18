@@ -18,6 +18,8 @@ public class Player : Character
     public Transform hatHolder;
     public Hat.HatType hatType;
 
+    private const int CAP_MAX_HEIGHT = 15;
+
 	void Awake() {
 		base.Awake();
 
@@ -33,9 +35,10 @@ public class Player : Character
 	void Update() {
 		base.Update();
         GetMaxHeight();
-        rigidbody2D.AddForce(new Vector2(0, -9.8f));
+        rigidbody2D.AddForce(new Vector2(0, PhysicsEngine.GRAVITY));
 	}
 
+    // Movement and Caluclation-y stuffs
     private void GetMaxHeight() { 
         if (!IsGrounded) {
             if ((rigidbody2D.velocity.y < 0.15f && rigidbody2D.velocity.y > 0) 
@@ -47,10 +50,51 @@ public class Player : Character
 
     private void Bounce() {
         IsGrounded = false;
+        if (maxHeight > CAP_MAX_HEIGHT)
+            maxHeight = CAP_MAX_HEIGHT;
         float Force = PhysicsEngine.CalculateVerticalBounce(maxHeight, mass);
         rigidbody2D.AddForce(new Vector2(0, Force * Time.deltaTime));
     }
 
+    private void Lollicopter() {
+        if (!IsGrounded) {
+            rigidbody2D.AddForce(new Vector2(0, 400));
+        }
+    }
+
+    // Horizontal Movement
+	public void MoveHorizontal(float axisValue) {
+        if (rigidbody2D.velocity.x >= MAX_VELOCITY || rigidbody2D.velocity.x <= -MAX_VELOCITY) {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * MAX_VELOCITY, rigidbody2D.velocity.y);
+        }
+
+        else {
+            float coeff = PhysicsEngine.GetCoeff(IsGrounded, groundType);
+
+            // Apply the forces to the object
+            if (axisValue < -0.1f) { // going left
+                transform.rotation = new Quaternion(0, 180, 0, 1);
+                hatHolder.rotation = transform.rotation;
+                axisValue *= -400;
+                rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * -1 * Time.deltaTime, 0));
+            } else if(axisValue > 0.1f) { // going right
+                transform.rotation = new Quaternion(0, 0, 0, 1);
+                hatHolder.rotation = transform.rotation;
+				axisValue *= 400;
+                rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * Time.deltaTime, 0));
+            }
+        }
+	}
+
+    // Jump Function
+    public void Jump() {
+        if (IsGrounded) {
+            IsGrounded = false;
+            rigidbody2D.AddForce(new Vector2(0, jumpForce));
+        }
+    }
+
+    // Triggers
     void OnTriggerEnter2D(Collider2D c) {
         // Check to see if it's on a sticky surface
         if (c.tag == "SlipperySurface")
@@ -65,7 +109,6 @@ public class Player : Character
     {
         if (c.tag == "Hat")
         {
-        
             hatInRange = true;
             closestHat = c.gameObject.GetComponent<Hat>();
         }
@@ -80,22 +123,20 @@ public class Player : Character
         Debug.Log("Left a trigger, tag was: " + c.tag);
     }
 
+    // Collision
     void OnCollisionEnter2D(Collision2D c) {
         if (c.gameObject.tag == "JelloBlock") { 
             foreach(ContactPoint2D contact in c.contacts) {
-                if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope)
-                {
+                if (Vector3.Angle(contact.normal, Vector3.up) < maxSlope) {
                     Bounce();
-                    Debug.Log("I hit a block");
                 }
 		    }
         }
-
     }
    
+    // Hats
     public void UseHatMechanic()
     {
-        
         if (currentHat)
         {
            currentHat.StartMechanic();
@@ -120,4 +161,6 @@ public class Player : Character
     {
 
     }
+
+
 }

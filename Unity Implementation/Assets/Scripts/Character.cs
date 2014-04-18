@@ -65,38 +65,6 @@ public class Character : MonoBehaviour
         get { return grounded; }
         set { grounded = value; }
     }
-
-    // Horizontal Movement TODO may switch this to movement in general, and check within there if player jumped or not?
-    // Or maybe have a "Has Jumped" and use that to do vertical physics
-	public void MoveHorizontal(float axisValue) {
-        if (rigidbody2D.velocity.x >= MAX_VELOCITY || rigidbody2D.velocity.x <= -MAX_VELOCITY) {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * MAX_VELOCITY, rigidbody2D.velocity.y);
-            //rigidbody2D.velocity = rigidbody2D.velocity.normalized * MAX_VELOCITY;
-        }
-
-        else {
-            float coeff = PhysicsEngine.GetCoeff(IsGrounded, groundType);
-
-            // Apply the forces to the object
-            if (axisValue < -0.1f) { // going left
-                transform.rotation = new Quaternion(0, 180, 0, 1);
-                axisValue *= -400;
-                rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * -1 * Time.deltaTime, 0));
-            } else if(axisValue > 0.1f) { // going right
-                transform.rotation = new Quaternion(0, 0, 0, 1);
-				axisValue *= 400;
-                rigidbody2D.AddForce(new Vector2(PhysicsEngine.HorizontalNetForce(axisValue, coeff, mass) * Time.deltaTime, 0));
-            }
-        }
-	}
-
-    // Jump Function
-    public void Jump() {
-        if (IsGrounded) {
-            IsGrounded = false;
-            rigidbody2D.AddForce(new Vector2(0, jumpForce));
-        }
-    }
 	
     void OnCollisionStay2D(Collision2D collision) {
 		foreach(ContactPoint2D contact in collision.contacts) {

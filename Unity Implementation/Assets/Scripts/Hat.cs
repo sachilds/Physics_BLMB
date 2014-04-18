@@ -13,7 +13,15 @@ public class Hat : MonoBehaviour
         None,
         Indian,
         Jello,
-        CandyCannon
+        CandyCannon,
+        HookerHat,
+        Lollicopter,
+<<<<<<< HEAD
+        CandyCannon,
+        Boat
+=======
+       
+>>>>>>> b3946c50eba4229a00901497d5b64984dd200ff0
     }
     public HatType hatType;
 
@@ -40,10 +48,17 @@ public class Hat : MonoBehaviour
 
     private GameObject stoneInGame;
     public GameObject stonePrefab;
-    public GameObject jelloBlock;
+    public GameObject jelloPrefab;
     private GameObject jelloInGame;
     public GameObject cannonPrefab;
     private GameObject cannonInGame;
+<<<<<<< HEAD
+    public GameObject boatPrefab;
+    private GameObject boatInGame;
+=======
+    public GameObject hookPrefab;
+    private GameObject hookInGame;
+>>>>>>> b3946c50eba4229a00901497d5b64984dd200ff0
     private bool canSpawn;
 
     private Player wearer;				//Reference to who is wearing the hat
@@ -87,10 +102,18 @@ public class Hat : MonoBehaviour
             case HatType.Jello:
                 //scale = wearer.scale;
                 break;
+
+            case HatType.HookerHat:
+
+            case HatType.Lollicopter:
+
+                break;
+            case HatType.Boat:
+                break;
         }
 
         if (wearer)
-            transform.position = wearer.hatHolder.position;
+            transform.position = new Vector3(wearer.hatHolder.position.x, wearer.hatHolder.position.y, -0.1f);
     }
     public void StartMechanic()
     {
@@ -109,19 +132,16 @@ public class Hat : MonoBehaviour
         {
             case HatType.None:
                 break;
+            
             case HatType.Jello:
-                if (!jelloInGame)
-                {
-                    jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
-                }
-                else
-                {
+                if (jelloInGame)
                     Destroy(jelloInGame);
-                    jelloInGame = Instantiate(jelloBlock, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), transform.rotation) as GameObject;
-                }
+
+                jelloInGame = Instantiate(jelloPrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, 0), mechanicSpawn.rotation) as GameObject;
                 yield return new WaitForSeconds(0.5f);
                 canSpawn = true;
                 break;
+            
             case HatType.Indian:
                 float MAX_CHARGE_X = 200;
                 float MAX_CHARGE_Y = 350;
@@ -129,24 +149,21 @@ public class Hat : MonoBehaviour
                 
                 Vector2 initialVelocity = new Vector2(25,25);
                 while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
-                {
-                    
+                {                    
                     //plot
                     //RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
-                    Debug.DrawLine(transform.root.position, new Vector2(transform.root.position.x + 10, transform.root.position.y + 10), Color.green);
+                   // Debug.DrawLine(transform.root.position, new Vector2(transform.root.position.x + 10, transform.root.position.y + 10), Color.green);
                   
                     initialVelocity.y += chargeRate;
                     if(initialVelocity.x < MAX_CHARGE_X) initialVelocity.x += chargeRate;
                     
-                    if (initialVelocity.y > MAX_CHARGE_Y)
-                    {
-                       
+                    if (initialVelocity.y > MAX_CHARGE_Y) {
                         break;
                     }
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
                 GameObject go = Instantiate(stonePrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, mechanicSpawn.transform.position.y), 
-                                           new Quaternion(0,0, 0, 1)) as GameObject;
+                                           mechanicSpawn.rotation) as GameObject; //new Quaternion(0,0, 0, 1)
                 int dir = 0;
                 if (wearer.transform.rotation.y == 0)
                 {
@@ -164,6 +181,52 @@ public class Hat : MonoBehaviour
 
                 canSpawn = true;
                 break;
+
+            case HatType.HookerHat:
+                GameObject hookInGame = Instantiate(hookPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
+                                          new Quaternion(0, 0, 0, 1)) as GameObject;
+                
+                //.Debug.D//ebug.Log("Made it");
+                dir = 0;
+                if (wearer.transform.rotation.y == 0)
+                {
+                    dir = 1;
+                }
+                else dir = -1;
+
+                hookInGame.GetComponent<Rigidbody2D>().AddForce(new Vector2(300 * dir, 800));
+                hookInGame.transform.Rotate(new Vector3(0,0,1), dir * -45);
+                hookInGame.transform.localScale = new Vector3(1, 1, 1);
+                string temp = wearer.name[6] + " ";
+                hookInGame.GetComponent<HookerScript>().setNumOfOwner(int.Parse(temp));
+                
+                while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
+                {
+                    yield return new WaitForSeconds(Time.deltaTime);
+                }
+                GameObject.DestroyObject(hookInGame);
+                canSpawn = true;
+                break;
+
+            
+            case HatType.Lollicopter:
+                wearer.SendMessage("Lollicopter");
+                yield return new WaitForSeconds(0.7f);
+                canSpawn = true;
+                break;
+           
+<<<<<<< HEAD
+            case HatType.Boat:
+                if(boatInGame)
+                    Destroy(boatInGame);
+
+                boatInGame = Instantiate(boatPrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, 0), mechanicSpawn.rotation) as GameObject;
+                yield return new WaitForSeconds(0.5f);
+                canSpawn = true;
+                break;
+=======
+
+>>>>>>> b3946c50eba4229a00901497d5b64984dd200ff0
             default:
                 break;
         }
@@ -183,13 +246,18 @@ public class Hat : MonoBehaviour
     {
         switch (hatType)
         {
-            case Hat.HatType.None:
+            case HatType.None:
                 break;
             case HatType.Indian:
-            case Hat.HatType.Jello:
+            case HatType.Jello:
+                Destroy(currentHat.gameObject);
+                if (jelloInGame)
+                    Destroy(jelloInGame);
+                break;
+            case HatType.CandyCannon:
                 Destroy(currentHat.gameObject);
                 break;
-            case Hat.HatType.CandyCannon:
+            case HatType.Lollicopter:
                 Destroy(currentHat.gameObject);
                 break;
             default:
