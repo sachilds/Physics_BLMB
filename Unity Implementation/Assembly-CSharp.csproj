@@ -56,7 +56,11 @@
      <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_ShurikenThreadFix.cs" />
      <Compile Include="Assets\JMO Assets\Cartoon FX\Spawn System\CFX_SpawnSystem.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\Scripts\Boat_Script.cs" />
+=======
+     <Compile Include="Assets\Scripts\AdjustVolume.cs" />
+>>>>>>> Options scene can now adjust bg music volume and sfx volume
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\CandyCloudAI.cs" />
      <Compile Include="Assets\Scripts\CandyCornAI.cs" />
@@ -72,6 +76,7 @@
      <Compile Include="Assets\Scripts\MovingPlatform.cs" />
      <Compile Include="Assets\Scripts\MovingTexture.cs" />
      <Compile Include="Assets\Scripts\Obstacle.cs" />
+     <Compile Include="Assets\Scripts\OptionsScript.cs" />
      <Compile Include="Assets\Scripts\PatrollingEnemyAI.cs" />
      <Compile Include="Assets\Scripts\PhysicsEngine.cs" />
      <Compile Include="Assets\Scripts\PlaySoundEffect.cs" />

@@ -22,6 +22,9 @@ public class Game_Manager : MonoBehaviour {
     public static GameState gameState;
     private GameState prevState;
 
+	//Cassie was here
+	public static float soundFXVol;
+	public static float backGroundVol;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +42,11 @@ public class Game_Manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    
+	    if(gameState == GameState.Options)
+		{
+			soundFXVol = GameObject.Find("Options").GetComponent<OptionsScript>().getFXVol();
+			backGroundVol = GameObject.Find("Options").GetComponent<OptionsScript>().getBGVol();
+		}
 	}
 
     // GUI
@@ -77,7 +84,7 @@ public class Game_Manager : MonoBehaviour {
                     PlayMenu();
                     Debug.Log("Play the Game - Continue from the XML File");
                     gameState = GameState.InGame;
-                    LoadNewScreen("DemoLevel");
+                    LoadNewScreen("CandyLand_1Player");
                 }
 
                 //Options
@@ -85,6 +92,7 @@ public class Game_Manager : MonoBehaviour {
                     PlayMenu();
                     Debug.Log("Open the Options");
                     gameState = GameState.Options;
+					LoadNewScreen("Options");
                 }
 
                 //Quit
