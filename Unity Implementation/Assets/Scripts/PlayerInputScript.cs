@@ -45,7 +45,7 @@ public class PlayerInputScript : MonoBehaviour
                 {
                     if (Player.hatInRange && !Player.currentHat)
                         Player.AttachToPlayer();
-                    else
+                    else if (Player.currentHat)
                         Player.DetachFromPlayer();
                 }
                 break;
@@ -68,7 +68,7 @@ public class PlayerInputScript : MonoBehaviour
                 {
                     if (Player.hatInRange && !Player.currentHat)
                         Player.AttachToPlayer();
-                    else
+                    else if (Player.currentHat)
                         Player.DetachFromPlayer();
                 }
                 break;
