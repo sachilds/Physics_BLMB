@@ -8,7 +8,7 @@ public class PhysicsEngine : MonoBehaviour {
     private const float COEFF_STICKY = 0.2f;
     private const float COEFF_SLIPPERY = 1;
     public const float COEFF_RESTITUTION_BOUNCY = 0.5f;
-
+    public const int MAX_VELOCITY = 5;
 
     // The force applied by Friction
 	public static Vector2 CalculateFrictionForce(float coeff, float mass) {
@@ -44,6 +44,9 @@ public class PhysicsEngine : MonoBehaviour {
         return mass * (vf / Time.deltaTime);
     }
 
+
+
+
     // DELETE THIS SOON
     public static Vector2 CalculateNetForce(Vector2 appliedForce, float coeffFriction, float mass) {
         Vector2 Ff = CalculateFrictionForce(coeffFriction, mass);
@@ -57,11 +60,11 @@ public class PhysicsEngine : MonoBehaviour {
         }
         else {
             switch (type) {
-                case GroundType.REGULAR:
+                case GroundType.Regular:
                     return COEFF_GROUND;
-                case GroundType.SLIPPERY:
+                case GroundType.Slippery:
                     return COEFF_SLIPPERY;
-                case GroundType.STICKY:
+                case GroundType.Sticky:
                     return COEFF_STICKY;
             }
         }

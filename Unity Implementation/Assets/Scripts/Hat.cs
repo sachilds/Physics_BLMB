@@ -214,6 +214,8 @@ public class Hat : MonoBehaviour
                 if(boatInGame)
                     Destroy(boatInGame);
 
+                wearer.onBoat = false;
+                wearer.ridingBoat = null;
                 boatInGame = Instantiate(boatPrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, 0), mechanicSpawn.rotation) as GameObject;
                 yield return new WaitForSeconds(0.5f);
                 canSpawn = true;
@@ -259,7 +261,8 @@ public class Hat : MonoBehaviour
     public static void AttachToPlayer(Player player, Hat newHat)
     {
         newHat.wearer = player;
-        newHat.transform.rotation = new Quaternion(0, 0, 0, 1);
+        newHat.transform.rotation = player.transform.rotation;
+        //newHat.transform.rotation = new Quaternion(0, 0, 0, 1);
         newHat.rigidbody2D.isKinematic = true;
         newHat.collider2D.enabled = false;
         newHat.transform.position = player.hatHolder.position;
