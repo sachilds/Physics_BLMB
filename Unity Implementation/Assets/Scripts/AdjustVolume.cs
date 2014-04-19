@@ -6,6 +6,7 @@ public class AdjustVolume : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debug.Log("Start Bg Vol "+ audio.volume);
+		Debug.Log("Adjust by "+ Game_Manager.backGroundVol);
 		audio.volume *= Game_Manager.backGroundVol;
 		Debug.Log("Curr Bg Vol "+ audio.volume);
 	}

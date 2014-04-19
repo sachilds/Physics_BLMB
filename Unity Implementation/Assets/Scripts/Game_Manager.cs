@@ -23,8 +23,8 @@ public class Game_Manager : MonoBehaviour {
     private GameState prevState;
 
 	//Cassie was here
-	public static float soundFXVol;
-	public static float backGroundVol;
+	public static float soundFXVol = 1.0f;
+	public static float backGroundVol = 1.0f;
 
 	// Use this for initialization
 	void Start () {
