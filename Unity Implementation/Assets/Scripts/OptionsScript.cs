@@ -33,6 +33,7 @@ public class OptionsScript : MonoBehaviour {
 		if(GUI.Button(new Rect(10,10,100,100),"Back to Menu"))
 		{
 			Application.LoadLevel("MainMenu");
+			Main_Menu_GUI.menuStatus=" ";
 		}
 
 	}

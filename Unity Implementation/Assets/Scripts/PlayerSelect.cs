@@ -13,6 +13,7 @@ public class PlayerSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log ("Press A on Controllers and Press Start to Enter the World");
 		if (Input.GetButtonDown ("P1.Jump"))
 			playerOne = true;
 		if (Input.GetButtonDown ("P2.Jump"))
@@ -22,15 +23,17 @@ public class PlayerSelect : MonoBehaviour {
 		if (Input.GetButtonDown ("P2.HatMechanic"))
 			playerTwo = true;
 
-		if(Input.GetButtonDown (
-		if (playerOne && playerTwo) {
-			//loads two player map
-			Application.LoadLevel ("Candyland_2Player");
-			Debug.Log ("loads two player map");
-		} else {
-			//loads single player map
-			Debug.Log ("loads single player map");
-			Application.LoadLevel ("Candyland_1Player");
+		if(Input.GetButtonDown ("P1.Start"))
+		   {
+			if (playerOne && playerTwo) {
+				//loads two player map
+				Application.LoadLevel ("Candyland_2Player");
+				Debug.Log ("loads two player map");
+			} else {
+				//loads single player map
+				Debug.Log ("loads single player map");
+				Application.LoadLevel ("Candyland_1Player");
+			}
 		}
 	}
 }

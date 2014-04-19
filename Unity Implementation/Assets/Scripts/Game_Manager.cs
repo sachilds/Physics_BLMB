@@ -59,51 +59,22 @@ public class Game_Manager : MonoBehaviour {
 				if (Main_Menu_GUI.menuStatus.Equals("Play"))
 			    {
 					//PlayMenu();
-					Debug.Log("Play the Game - Continue from the XML File");
+					Debug.Log("Play the Game");
 					//gameState = GameState.InGame;
-					//LoadNewScreen("DemoLevel");
+					LoadNewScreen("PlayerSelect");
 				}
 				//Options
 				if (Main_Menu_GUI.menuStatus.Equals("Options")) {
 					//PlayMenu();
 					Debug.Log("Open the Options");
-					//gameState = GameState.Options;
-					//LoadNewScreen("Options");
+					gameState = GameState.Options;
+					LoadNewScreen("Options");
 				}
 				if (Main_Menu_GUI.menuStatus.Equals("Quit")) {
 					//PlayMenu();
 					Debug.Log("Quit the Game");
-					//Application.Quit();
+					Application.Quit();
 				}
-				//Quit
-				/*
-                GUI.Label(GetMenuLogo(), "BLB");
-                GUI.BeginGroup(GetMainMenu());
-                //New Game
-                if (GUI.Button(GetMenuLabel(1), "Play Game"))
-                {
-                    PlayMenu();
-                    Debug.Log("Play the Game - Continue from the XML File");
-                    gameState = GameState.InGame;
-                    LoadNewScreen("CandyLand_1Player");
-                }
-
-                //Options
-                if (GUI.Button(GetMenuLabel(2), "Options")) {
-                    PlayMenu();
-                    Debug.Log("Open the Options");
-                    gameState = GameState.Options;
-					LoadNewScreen("Options");
-                }
-
-                //Quit
-                if (GUI.Button(GetMenuLabel(3), "Quit")) {
-                    PlayMenu();
-                    Debug.Log("Quit the Game");
-                    Application.Quit();
-                }
-                GUI.EndGroup();
-                */
                 break;
 
             //IN-GAME	
