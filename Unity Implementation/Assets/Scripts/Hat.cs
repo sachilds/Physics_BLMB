@@ -269,8 +269,12 @@ public class Hat : MonoBehaviour
         newHat.transform.parent = player.hatHolder;
     }
 
-    public static void DetachFromPlayer()
+    public static void DetachFromPlayer(Player player)
     {
-
+        player.currentHat.wearer = null;
+        player.currentHat.rigidbody2D.isKinematic = false;
+        player.currentHat.collider2D.enabled = true;
+        player.currentHat.transform.position = player.hatHolder.position;
+        player.currentHat.transform.parent = null;
     }
 }

@@ -179,7 +179,7 @@ public class Player : Character
 
     public void AttachToPlayer()
     {
-        
+        Debug.Log("Pickup hat.");
         Hat.AttachToPlayer(gameObject.GetComponent<Player>(), closestHat);
         currentHat = closestHat;
         hatType = currentHat.hatType;
@@ -187,7 +187,10 @@ public class Player : Character
 
     public void DetachFromPlayer()
     {
-
+        Debug.Log("Drop hat.");
+        Hat.DetachFromPlayer(gameObject.GetComponent<Player>());
+        currentHat = null;
+        hatType = Hat.HatType.None;
     }
 
 
