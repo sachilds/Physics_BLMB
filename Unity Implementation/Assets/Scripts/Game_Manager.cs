@@ -68,6 +68,7 @@ public class Game_Manager : MonoBehaviour {
 					//PlayMenu();
 					Debug.Log("Open the Options");
 					//gameState = GameState.Options;
+					//LoadNewScreen("Options");
 				}
 				if (Main_Menu_GUI.menuStatus.Equals("Quit")) {
 					//PlayMenu();
