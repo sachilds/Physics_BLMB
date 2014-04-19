@@ -18,6 +18,11 @@ public class Player : Character
     public Transform hatHolder;
     public Hat.HatType hatType;
 
+    //[HideInInspector]
+    public bool onBoat;
+    //[HideInInspector]
+    public GameObject ridingBoat;
+
     private const int CAP_MAX_HEIGHT = 15;
 
 	void Awake() {
@@ -35,8 +40,11 @@ public class Player : Character
 	void Update() {
 		base.Update();
         GetMaxHeight();
-        rigidbody2D.AddForce(new Vector2(0, PhysicsEngine.GRAVITY));
 	}
+
+    void FixedUpdate() {
+        rigidbody2D.AddForce(new Vector2(0, PhysicsEngine.GRAVITY));
+    }
 
     // Movement and Caluclation-y stuffs
     private void GetMaxHeight() { 
@@ -62,10 +70,22 @@ public class Player : Character
         }
     }
 
+    public void Movement(float axisValue) {
+        if (onBoat) {
+            if (ridingBoat) { // Make sure it exists
+                // Send over the value
+                ridingBoat.SendMessage("Movement", axisValue);
+            }
+        }
+        else {
+            MoveHorizontal(axisValue);
+        }
+    }
+
     // Horizontal Movement
-	public void MoveHorizontal(float axisValue) {
-        if (rigidbody2D.velocity.x >= MAX_VELOCITY || rigidbody2D.velocity.x <= -MAX_VELOCITY) {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * MAX_VELOCITY, rigidbody2D.velocity.y);
+	private void MoveHorizontal(float axisValue) {
+        if (rigidbody2D.velocity.x >= PhysicsEngine.MAX_VELOCITY || rigidbody2D.velocity.x <= -PhysicsEngine.MAX_VELOCITY) {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.normalized.x * PhysicsEngine.MAX_VELOCITY, rigidbody2D.velocity.y);
         }
 
         else {
@@ -98,10 +118,18 @@ public class Player : Character
     void OnTriggerEnter2D(Collider2D c) {
         // Check to see if it's on a sticky surface
         if (c.tag == "SlipperySurface")
-            groundType = GroundType.SLIPPERY;
+            groundType = GroundType.Slippery;
         else if (c.tag == "StickySurface")
-            groundType = GroundType.STICKY;
-
+            groundType = GroundType.Sticky;
+        else if (c.tag == "Water_Killzone") {
+            Debug.Log("Hello Killzone");
+            if (onBoat) {
+                ridingBoat.SendMessage("ResetBoat");
+                onBoat = false;
+                ridingBoat = null;
+            }
+            Level_Manager.Instance.KillPlayer(transform);
+        }
         Debug.Log("Entered a trigger, tag was: " + c.tag);
     }
 
@@ -119,7 +147,7 @@ public class Player : Character
         {
             hatInRange = false;
         }
-        groundType = GroundType.REGULAR;
+        groundType = GroundType.Regular;
         Debug.Log("Left a trigger, tag was: " + c.tag);
     }
 

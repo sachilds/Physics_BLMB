@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum GroundType { 
-    REGULAR, SLIPPERY, STICKY
+    Regular, Slippery, Sticky, Water, Air
 }
 
 [RequireComponent(typeof(SpriteRenderer))] 	//For visually rendering the character
@@ -20,8 +20,7 @@ public class Character : MonoBehaviour
 	[HideInInspector]
 	public BoxCollider2D boxCollider;
 
-	private bool grounded;					//Checks if the character is grounded
-    public const int MAX_VELOCITY = 5;
+	public bool grounded;					//Checks if the character is grounded
 
 	//Editable values via Inspector
 	public int scale;						//Transform scale of the player

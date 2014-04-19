@@ -16,12 +16,7 @@ public class Hat : MonoBehaviour
         CandyCannon,
         HookerHat,
         Lollicopter,
-<<<<<<< HEAD
-        CandyCannon,
         Boat
-=======
-       
->>>>>>> b3946c50eba4229a00901497d5b64984dd200ff0
     }
     public HatType hatType;
 
@@ -52,13 +47,13 @@ public class Hat : MonoBehaviour
     private GameObject jelloInGame;
     public GameObject cannonPrefab;
     private GameObject cannonInGame;
-<<<<<<< HEAD
+
     public GameObject boatPrefab;
     private GameObject boatInGame;
-=======
+
     public GameObject hookPrefab;
     private GameObject hookInGame;
->>>>>>> b3946c50eba4229a00901497d5b64984dd200ff0
+
     private bool canSpawn;
 
     private Player wearer;				//Reference to who is wearing the hat
@@ -214,19 +209,17 @@ public class Hat : MonoBehaviour
                 yield return new WaitForSeconds(0.7f);
                 canSpawn = true;
                 break;
-           
-<<<<<<< HEAD
+
             case HatType.Boat:
                 if(boatInGame)
                     Destroy(boatInGame);
 
+                wearer.onBoat = false;
+                wearer.ridingBoat = null;
                 boatInGame = Instantiate(boatPrefab, new Vector3(mechanicSpawn.transform.position.x, mechanicSpawn.transform.position.y, 0), mechanicSpawn.rotation) as GameObject;
                 yield return new WaitForSeconds(0.5f);
                 canSpawn = true;
                 break;
-=======
-
->>>>>>> b3946c50eba4229a00901497d5b64984dd200ff0
             default:
                 break;
         }
@@ -268,7 +261,8 @@ public class Hat : MonoBehaviour
     public static void AttachToPlayer(Player player, Hat newHat)
     {
         newHat.wearer = player;
-        newHat.transform.rotation = new Quaternion(0, 0, 0, 1);
+        newHat.transform.rotation = player.transform.rotation;
+        //newHat.transform.rotation = new Quaternion(0, 0, 0, 1);
         newHat.rigidbody2D.isKinematic = true;
         newHat.collider2D.enabled = false;
         newHat.transform.position = player.hatHolder.position;

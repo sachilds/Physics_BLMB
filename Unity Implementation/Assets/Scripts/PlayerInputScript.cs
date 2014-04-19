@@ -31,7 +31,7 @@ public class PlayerInputScript : MonoBehaviour
             case PlayerNumber.one:
                 //Left and Right
                 if (Input.GetAxis("P1.Horizontal") != 0)
-                    Player.MoveHorizontal(Input.GetAxis("P1.Horizontal"));
+                    Player.Movement(Input.GetAxis("P1.Horizontal"));
 
                 if (Input.GetButton("P1.Jump"))
                 {
@@ -52,7 +52,7 @@ public class PlayerInputScript : MonoBehaviour
             case PlayerNumber.two:
                 //Left and Right
                 if (Input.GetAxis("P2.Horizontal") != 0)
-                    Player.MoveHorizontal(Input.GetAxis("P2.Horizontal"));
+                    Player.Movement(Input.GetAxis("P2.Horizontal"));
 
                 if (Player.IsGrounded && Input.GetAxis("P2.Jump") > 0)
                 {
