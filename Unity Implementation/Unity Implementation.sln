@@ -23,13 +23,16 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																																					GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																																									GlobalSection(MonoDevelopProperties) = preSolution
 =======
 <<<<<<< HEAD
 																																																																																																																																																			GlobalSection(MonoDevelopProperties) = preSolution
 =======
 																																																																																																																																																						GlobalSection(MonoDevelopProperties) = preSolution
 >>>>>>> b3946c50eba4229a00901497d5b64984dd200ff0
+=======
+																																																																																																																																																												GlobalSection(MonoDevelopProperties) = preSolution
+>>>>>>> Options scene can now adjust bg music volume and sfx volume
 =======
 																																																																																																																																																	GlobalSection(MonoDevelopProperties) = preSolution
 >>>>>>> 0c1e4b22905e3a472e1fe618c34a54c581ecd3b2
