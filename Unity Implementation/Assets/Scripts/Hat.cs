@@ -178,29 +178,136 @@ public class Hat : MonoBehaviour
                 break;
 
             case HatType.HookerHat:
+                wearer.GetComponent<Player>().Jump();
+                wearer.GetComponent<Player>().Jump();
+
                 GameObject hookInGame = Instantiate(hookPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
                                           new Quaternion(0, 0, 0, 1)) as GameObject;
-                
-                //.Debug.D//ebug.Log("Made it");
+                // GameObject player = GameObject.Find("Player" + wearer.name[6]) as GameObject;
+           
                 dir = 0;
                 if (wearer.transform.rotation.y == 0)
                 {
                     dir = 1;
                 }
                 else dir = -1;
-
-                hookInGame.GetComponent<Rigidbody2D>().AddForce(new Vector2(300 * dir, 800));
-                hookInGame.transform.Rotate(new Vector3(0,0,1), dir * -45);
+               
+                hookInGame.GetComponent<Rigidbody2D>().AddForce(new Vector2(450 * dir, 600));
+                hookInGame.transform.Rotate(new Vector3(0,0,1), dir * -10);
                 hookInGame.transform.localScale = new Vector3(1, 1, 1);
                 string temp = wearer.name[6] + " ";
                 hookInGame.GetComponent<HookerScript>().setNumOfOwner(int.Parse(temp));
                 
+                float d = 0;
+                float v = 0;
+                float t = 0;
+                float p = 0;
+                float maxTheta = 0;
+                //convert to rads
+                //  maxTheta *= (Mathf.PI / 180);
+                float phaseAngle = 0;
+                float newAngle = 0;
+                float oldP = p;
+                float oldD = d;
+
                 while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
                 {
+                    if(!hookInGame.GetComponent<HookerScript>().isHooked)
+                    {
+                        
+                        yield return new WaitForSeconds(Time.deltaTime);
+                    }
+                    else
+                    {
+                        Debug.Log("Hooked");
+                        d = Vector2.Distance(wearer.transform.position, hookInGame.transform.position);
+                        v = Mathf.Sqrt(9.81f / d) ;
+                        t = 0;
+                        p = (2 * Mathf.PI) * (float)(Mathf.Sqrt(d / 9.81f)); //physics2d.gravity.y was givving me NAN errors
+                        
+                        maxTheta = dir * Mathf.Asin((Mathf.Abs(hookInGame.transform.position.x - wearer.transform.position.x))
+                                                    / Mathf.Abs(d));
+                        //convert to rads
+                        //  maxTheta *= (Mathf.PI / 180);
+                        phaseAngle = (Mathf.PI / 2.0f);
+                        newAngle = 0;
+                        oldP = p;
+                        oldD = d;
+                        Debug.Log("d = " + d
+                            + "| v = " + v
+                            + "| p = " + p
+                            + "| maxTheta = " + maxTheta
+                            + "| phaseAngle = " + phaseAngle);
+                        break;
+                    }
+                }
+                wearer.rigidbody2D.isKinematic = true;
+                wearer.rigidbody2D.velocity = Vector2.zero;
+
+                //wearer.collider2D.enabled = false;
+               
+                while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))//this seems sloppy but just want to seperate my logic looops i guess
+                {
+                    float ropeClimbSpeed = 4;
+                    if (Input.GetButton("P1.Vertical"))
+                    {
+                        Debug.Log("Moving up");
+                        d = d - ((ropeClimbSpeed * Input.GetAxis("P1.Vertical")) * Time.deltaTime);
+
+                    }
+                    //if (Input.GetAxis("P1.Horizontal") > 0)
+                    //{
+                    //    Debug.Log("Moving Right");
+                    //    maxTheta += ropeClimbSpeed * Time.deltaTime;
+                    //    if (maxTheta > 1)
+                    //        maxTheta = 1;
+                    //    else if (maxTheta < -1)
+                    //        maxTheta = -1;
+
+                    //}
+                    if (d != oldD)
+                    {
+                     
+                        float newRatio = d / oldD;
+                        //p = (2 * Mathf.PI) * (float)(Mathf.Sqrt(d / 9.81f));
+                        
+                       // t *= newRatio;
+                        v = Mathf.Sqrt(9.8f / d);
+                        
+                        oldD = d;
+                        oldP = p;
+                    }
+                    //if(dir > 0)
+                    //    t = Mathf.Lerp(t, p, Time.deltaTime * 2);
+                    //else if (dir < 0)
+                    //    t = Mathf.Lerp(t, 0, Time.deltaTime * 2);
+                    //t needs to ping pong between 0 and P
+                    t += (Time.deltaTime * dir) * 3;
+                    //if (t > p)
+                    //    dir *= -1;
+                    //else if (t < 0)
+                    //    dir *= -1;
+                    newAngle = maxTheta * Mathf.Sin(v * t + phaseAngle);
+                    
+                   // Debug.Log("new angle " + newAngle);
+                    
+                    float tempX = Mathf.Sin(newAngle) * d;
+                    float tempy = Mathf.Cos(newAngle) * d;
+
+                    Debug.Log(maxTheta);
+                    wearer.transform.position = new Vector2(hookInGame.transform.position.x - tempX, hookInGame.transform.position.y - tempy);
+
+
+                    Debug.DrawLine(hookInGame.transform.position, wearer.transform.position);
+                    Debug.DrawLine(hookInGame.transform.position, new Vector2(hookInGame.transform.position.x, wearer.transform.position.y));
+                    Debug.DrawLine(wearer.transform.position, new Vector2(hookInGame.transform.position.x, wearer.transform.position.y));
+
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
                 GameObject.DestroyObject(hookInGame);
                 canSpawn = true;
+                wearer.rigidbody2D.isKinematic = false;
+                //wearer.collider2D.enabled = true;
                 break;
 
             
