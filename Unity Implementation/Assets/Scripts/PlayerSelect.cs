@@ -23,20 +23,21 @@ public class PlayerSelect : MonoBehaviour {
 		if (Input.GetButtonDown ("P2.HatMechanic"))
 			playerTwo = true;
 
-<<<<<<< HEAD
-		if(Input.GetButtonDown ("P1.Start"))
-		   {
-			if (playerOne && playerTwo) {
-				//loads two player map
-				Application.LoadLevel ("Candyland_2Player");
-				Debug.Log ("loads two player map");
-			} else {
-				//loads single player map
-				Debug.Log ("loads single player map");
-				Application.LoadLevel ("Candyland_1Player");
-			}
-=======
-	
+        if (Input.GetButtonDown("P1.Start"))
+        {
+            if (playerOne && playerTwo)
+            {
+                //loads two player map
+                Application.LoadLevel("Candyland_2Player");
+                Debug.Log("loads two player map");
+            }
+            else
+            {
+                //loads single player map
+                Debug.Log("loads single player map");
+                Application.LoadLevel("Candyland_1Player");
+            }
+        }
 		if (playerOne && playerTwo) {
 			//loads two player map
 			Application.LoadLevel ("Candyland_2Player");
@@ -45,7 +46,7 @@ public class PlayerSelect : MonoBehaviour {
 			//loads single player map
 			Debug.Log ("loads single player map");
 			Application.LoadLevel ("Candyland_1Player");
->>>>>>> implemented pendulum(Hooker hat) but havent finished it, it works as a perfect pendulum but i wanna mod it a bit
+
 		}
 	}
 }
