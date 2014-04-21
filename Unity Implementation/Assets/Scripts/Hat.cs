@@ -178,9 +178,6 @@ public class Hat : MonoBehaviour
                 break;
 
             case HatType.HookerHat:
-                wearer.GetComponent<Player>().Jump();
-                wearer.GetComponent<Player>().Jump();
-
                 GameObject hookInGame = Instantiate(hookPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
                                           new Quaternion(0, 0, 0, 1)) as GameObject;
                 // GameObject player = GameObject.Find("Player" + wearer.name[6]) as GameObject;
@@ -212,24 +209,24 @@ public class Hat : MonoBehaviour
 
                 while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
                 {
-                    if(!hookInGame.GetComponent<HookerScript>().isHooked)
+                    if(!hookInGame.GetComponent<HookerScript>().isHooked)//being thrown but not hooked
                     {
                         
                         yield return new WaitForSeconds(Time.deltaTime);
                     }
-                    else
+                    else//just got hooked
                     {
                         Debug.Log("Hooked");
                         d = Vector2.Distance(wearer.transform.position, hookInGame.transform.position);
-                        v = Mathf.Sqrt(9.81f / d) ;
+                        v = Mathf.Sqrt(9.81f / d) ;//physics2d.gravity was giving issue
                         t = 0;
                         p = (2 * Mathf.PI) * (float)(Mathf.Sqrt(d / 9.81f)); //physics2d.gravity.y was givving me NAN errors
                         
                         maxTheta = dir * Mathf.Asin((Mathf.Abs(hookInGame.transform.position.x - wearer.transform.position.x))
-                                                    / Mathf.Abs(d));
+                                                    / Mathf.Abs(d)); //SOH CAH TOA 
                         //convert to rads
                         //  maxTheta *= (Mathf.PI / 180);
-                        phaseAngle = (Mathf.PI / 2.0f);
+                        phaseAngle = (Mathf.PI / 2.0f); //I feel phase angle is ALWAYS pi/2 if its a pendulum lol
                         newAngle = 0;
                         oldP = p;
                         oldD = d;
@@ -242,12 +239,18 @@ public class Hat : MonoBehaviour
                     }
                 }
                 wearer.rigidbody2D.isKinematic = true;
-                wearer.rigidbody2D.velocity = Vector2.zero;
+                wearer.rigidbody2D.velocity = Vector2.zero;//kill unity physics with a bat
 
                 //wearer.collider2D.enabled = false;
                
                 while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))//this seems sloppy but just want to seperate my logic looops i guess
                 {
+                    if(!wearer.renderer.enabled) //only happens if player died or is being teleported by a stageporter. 
+                    {
+                        GameObject.DestroyObject(hookInGame);
+                        canSpawn = true;
+                        yield break;
+                    }
                     float ropeClimbSpeed = 4;
                     if (Input.GetButton("P1.Vertical"))
                     {
@@ -371,7 +374,12 @@ public class Hat : MonoBehaviour
         newHat.transform.rotation = player.transform.rotation;
         //newHat.transform.rotation = new Quaternion(0, 0, 0, 1);
         newHat.rigidbody2D.isKinematic = true;
-        newHat.collider2D.enabled = false;
+        Collider2D[] col = newHat.GetComponents<Collider2D>();
+        foreach (Collider2D c in col )
+        {
+            c.enabled = false;
+        }
+        //newHat.collider2D.enabled = false;
         newHat.transform.position = player.hatHolder.position;
         newHat.transform.parent = player.hatHolder;
     }

@@ -30,12 +30,12 @@ public class Level_Manager : MonoBehaviour {
         if (Player2 = GameObject.Find("Player2"))
         {
             NumberOfPlayers++;
-            mTheSegments = new Segment_Script[5];
+            mTheSegments = new Segment_Script[4];
             mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
             mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
             mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
             mTheSegments[3] = GameObject.Find("Stage4").GetComponent<Segment_Script>();
-            mTheSegments[4] = GameObject.Find("Stage5").GetComponent<Segment_Script>();
+           
         }
         else
         {
@@ -80,9 +80,7 @@ public class Level_Manager : MonoBehaviour {
             case '4':
                 prev = 3;
                 break;
-            case '5':
-                prev = 4;
-                break;
+            
             default:
                 Debug.Log("the Segments need to be Labeled StageX, where X is the next index");
                 break;
@@ -101,9 +99,7 @@ public class Level_Manager : MonoBehaviour {
             case '4':
                 next = 3;
                 break;
-            case '5':
-                next = 4;
-                break;
+          
             default:
                 Debug.Log("the Segments need to be Labeled StageX, where X is the next index");
                 break;

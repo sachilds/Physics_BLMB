@@ -100,6 +100,8 @@ public class TeleportScript : MonoBehaviour {
 
     private IEnumerator TeleportPlayerToNext(Transform pTransform)
     {
+        if(pTransform.GetComponent<Player>().currentHat)
+            pTransform.GetComponent<Player>().DetachFromPlayer();
         Vector3 endPos = Level_Manager.Instance.spawnPosition.position;
         Instantiate(Player.spawningEffect, pTransform.position, Quaternion.identity);
         porterOverride = true;
@@ -124,6 +126,7 @@ public class TeleportScript : MonoBehaviour {
                  speed * Time.deltaTime);
             if (pTransform.position == endPos)
             {
+                Debug.Log("Reached");
                 break;
             }
             yield return new WaitForSeconds(Time.deltaTime);

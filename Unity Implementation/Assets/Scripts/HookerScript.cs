@@ -18,10 +18,14 @@ public class HookerScript : MonoBehaviour {
     }
    public void OnTriggerEnter2D(Collider2D c)
     {
-        isHooked = true;
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        if (c.tag == "Hookable")
+        {
+            isHooked = true;
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+            GetComponent<Rigidbody2D>().isKinematic = true;
+        }
        
-        GetComponent<Rigidbody2D>().isKinematic = true;
 
     
    }

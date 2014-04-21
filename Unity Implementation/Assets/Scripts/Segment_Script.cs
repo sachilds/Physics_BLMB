@@ -34,11 +34,11 @@ public class Segment_Script : MonoBehaviour {
                 segments[i].sRenderer = tempObjects[i].renderer;
                 ToggleRenderer(segments[i]);
             }
-            if (!tempObjects[i].collider2D != null)
-            {
-                segments[i].sCollider = tempObjects[i].collider2D;
-                segments[i].sCollider.enabled = false;
-            }
+            //if (!tempObjects[i].collider2D != null)
+            //{
+            //    segments[i].sCollider = tempObjects[i].collider2D;
+            //    segments[i].sCollider.enabled = false;
+            //}
             
 		}
     }
@@ -54,7 +54,7 @@ public class Segment_Script : MonoBehaviour {
     {
         if (s.sCollider != null)
         {
-            s.sCollider.enabled = !s.sCollider.enabled;
+            //s.sCollider.enabled = !s.sCollider.enabled;
         }
     }
 
@@ -64,14 +64,14 @@ public class Segment_Script : MonoBehaviour {
         {
             segments[i].sTransform.localPosition = segments[i].sBeginningPos;
             segments[i].sRenderer.enabled = true;
-            segments[i].sCollider.enabled = true;
+           // segments[i].sCollider.enabled = true;
         }
     }
     public void SpawnSegment(){
         for (int i = 0; i < segments.Length; i++)
         {
             ToggleRenderer(segments[i]);
-            segments[i].sCollider.enabled = true;
+           // segments[i].sCollider.enabled = true;
             
         }
         
@@ -81,7 +81,7 @@ public class Segment_Script : MonoBehaviour {
         for (int i = 0; i < segments.Length; i++)
         {
             ToggleRenderer(segments[i]);
-            segments[i].sCollider.enabled = true;
+           // segments[i].sCollider.enabled = true;
         }
        
     }
