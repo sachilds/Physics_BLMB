@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent (typeof (GUIText))]			//Required to draw labels above player's heads
 public class PlayerLabel : MonoBehaviour
 {
-	private Player playerToFollow;				//Transform the label should hover over
+	public Player playerToFollow;				//Transform the label should hover over
 	public Vector3 labelOffset = Vector3.up;	//How far to draw label above player
 	public Font fontFace;						//Which type face to use
 	private int fontSize;						//Size of the GUIText font
@@ -13,7 +13,8 @@ public class PlayerLabel : MonoBehaviour
 
 	void Start()
 	{
-		playerToFollow = transform.parent.GetComponent<Player>();					//Label must be a child of the player
+        if(!playerToFollow)
+            playerToFollow = transform.parent.GetComponent<Player>();					//Label must be a child of the player
 		guiText = GetComponent<GUIText>();											//Get reference to GUIText component
 
 		guiText.text = playerToFollow.nickname;
@@ -38,6 +39,7 @@ public class PlayerLabel : MonoBehaviour
 	void Update() 
 	{
 		//Set the position of the text based on offset and player position
-		transform.position = Camera.main.WorldToViewportPoint(playerToFollow.transform.position + labelOffset);
+        if(playerToFollow)
+            transform.position = Camera.main.WorldToViewportPoint(playerToFollow.transform.position + labelOffset);
 	}
 }

@@ -55,12 +55,10 @@ public class PatrollingEnemyAI : MonoBehaviour {
 	void Update () {
 	
 		//CheckTwoPlayerDistance();
-		Debug.Log("player 1: "+p1Dist+" player 2: "+p2Dist);
 		gameObject.transform.Translate(new Vector3(forceNetX,0,0) * Time.deltaTime);
 		//Debug.DrawRay(gameObject.transform.position,Vector3.forward);
 		if(currentState == State.PATROL)
 		{
-			Debug.Log("PATROLLING");
 			if(gameObject.transform.position.x >= startPos.x+limit || gameObject.transform.position.x <= startPos.x-limit)
 			{
 				forceNetX *= -1;
@@ -71,7 +69,6 @@ public class PatrollingEnemyAI : MonoBehaviour {
 			//if true, set currentState to State.Chase
 			if(twoPlayers)
 			{
-				Debug.Log("TWO PLAYERS");
 				CheckTwoPlayerDistance();
 
 				if(p1Dist <= chaseArea || p2Dist <= chaseArea)
@@ -80,7 +77,6 @@ public class PatrollingEnemyAI : MonoBehaviour {
 			}
 			else
 			{
-				Debug.Log("ONE PLAYER");
 				CheckOnePlayerDistance();
 				if(p1Dist <= chaseArea)
 					currentState = State.CHASE;
@@ -88,7 +84,6 @@ public class PatrollingEnemyAI : MonoBehaviour {
 		}
 		if(currentState == State.CHASE)
 		{
-			Debug.Log("CHASING");
 			//if player is outside of distance set state to State.TOSTART
 			//else move in direction of player
 			if(twoPlayers)
@@ -160,7 +155,6 @@ public class PatrollingEnemyAI : MonoBehaviour {
 				if(p1Dist <= chaseArea)//if still within chase area
 				{
 					//chase player 1
-					Debug.Log("chasing ONLY p1");
 					if(player1.transform.position.x < gameObject.transform.position.x)//if p1 is to the left
 					{
 						if(!faceLeft)//if enemy not facing left
@@ -190,7 +184,6 @@ public class PatrollingEnemyAI : MonoBehaviour {
 		//after chase player returns to start position
 		if(currentState == State.TOSTART)
 		{
-			Debug.Log("TO START");
 			#region Checking to Chase
 			if(twoPlayers)
 			{
@@ -208,7 +201,6 @@ public class PatrollingEnemyAI : MonoBehaviour {
 			if(Vector3.Distance(startPos,gameObject.transform.position)>= -0.2 && Vector3.Distance(startPos,gameObject.transform.position)<= 0.2)
 			{
 				currentState = State.PATROL;
-				Debug.Log("Back to patrol");
 			}
 			if(startPos.x < gameObject.transform.position.x)//if startPos is to the left
 			{
@@ -242,7 +234,6 @@ public class PatrollingEnemyAI : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D c)
 	{
-		Debug.Log("is COlliding");
 		/*if(c.gameObject.tag == "Ground")
 		{
 			forceNetX *=-1;
