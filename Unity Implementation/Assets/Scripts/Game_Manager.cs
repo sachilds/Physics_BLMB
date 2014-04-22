@@ -102,7 +102,6 @@ public class Game_Manager : MonoBehaviour {
 
 			//Player Select Stuff
 			case GameState.PlayerSelect:
-			Debug.Log("poop");
 			foreach (GameObject go in GameObject.FindGameObjectsWithTag("MenuGUI"))
 			{
 				go.active = false;
