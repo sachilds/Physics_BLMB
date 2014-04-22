@@ -159,8 +159,10 @@ public class Level_Manager : MonoBehaviour {
             pTransform.position = Vector3.Lerp(pTransform.position,
                  spawnPosition.position,
                  warpSpeed * Time.deltaTime);
-            if (pTransform.position == spawnPosition.position)
-            {
+			if (pTransform.position == spawnPosition.position 
+			    || (Mathf.Abs(pTransform.position.x - spawnPosition.position.x) < 1f 
+			    && Mathf.Abs(pTransform.position.y - spawnPosition.position.y) < 1))
+			{
                 break;
             }
             yield return new WaitForSeconds(Time.deltaTime);
