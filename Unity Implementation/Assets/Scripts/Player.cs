@@ -40,6 +40,8 @@ public class Player : Character
 	void Update() {
 		base.Update();
         GetMaxHeight();
+        if (transform.position.y < -50)
+            Level_Manager.Instance.KillPlayer(transform);
 	}
 
     void FixedUpdate() {
