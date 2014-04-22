@@ -63,7 +63,7 @@ public class Segment_Script : MonoBehaviour {
         for (int i = 0; i < segments.Length; i++)
         {
             segments[i].sTransform.localPosition = segments[i].sBeginningPos;
-            segments[i].sRenderer.enabled = true;
+           segments[i].sRenderer.enabled = true;
            // segments[i].sCollider.enabled = true;
         }
     }
