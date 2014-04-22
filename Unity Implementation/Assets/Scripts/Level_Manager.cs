@@ -39,10 +39,10 @@ public class Level_Manager : MonoBehaviour {
         }
         else
         {
-            mTheSegments = new Segment_Script[3];
-            mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
-            mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
-            mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
+                mTheSegments = new Segment_Script[3];
+                mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
+                mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
+                mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
         }
 
         Instance = this;

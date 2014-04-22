@@ -23,7 +23,7 @@ public class Player : Character
     //[HideInInspector]
     public GameObject ridingBoat;
 
-    private const int CAP_MAX_HEIGHT = 15;
+    private const int CAP_MAX_HEIGHT = 3;
 
 	void Awake() {
 		base.Awake();
@@ -58,10 +58,24 @@ public class Player : Character
 
     private void Bounce() {
         IsGrounded = false;
+        float currHeight = transform.position.y;
+
+        if (currHeight < 0 && maxHeight < 0)
+            maxHeight = currHeight - maxHeight * -1;
+        else if (currHeight < 0 && maxHeight >= 0)
+            maxHeight = maxHeight + currHeight;
+        else
+            maxHeight = maxHeight - currHeight;
+
+        maxHeight *= -1;
+
         if (maxHeight > CAP_MAX_HEIGHT)
             maxHeight = CAP_MAX_HEIGHT;
+        Debug.Log(maxHeight);
+
         float Force = PhysicsEngine.CalculateVerticalBounce(maxHeight, mass);
         rigidbody2D.AddForce(new Vector2(0, Force * Time.deltaTime));
+        maxHeight = 0;
     }
 
     private void Lollicopter() {
@@ -117,13 +131,20 @@ public class Player : Character
     // Triggers
     void OnTriggerEnter2D(Collider2D c) {
         // Check to see if it's on a sticky surface
-        if (c.tag == "SlipperySurface")
+        if (c.tag == "SlipperySurface") {
             groundType = GroundType.Slippery;
+            rigidbody2D.drag = 0f;
+        }
         else if (c.tag == "StickySurface")
+        {
             groundType = GroundType.Sticky;
-        else if (c.tag == "Water_Killzone") {
+            rigidbody2D.drag = 5f;
+        }
+        else if (c.tag == "Water_Killzone")
+        {
             Debug.Log("Hello Killzone");
-            if (onBoat) {
+            if (onBoat)
+            {
                 ridingBoat.SendMessage("ResetBoat");
                 onBoat = false;
                 ridingBoat = null;
@@ -148,6 +169,7 @@ public class Player : Character
             hatInRange = false;
         }
         groundType = GroundType.Regular;
+        rigidbody2D.drag = 0.5f;
         Debug.Log("Left a trigger, tag was: " + c.tag);
     }
 
