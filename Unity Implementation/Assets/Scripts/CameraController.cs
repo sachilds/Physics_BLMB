@@ -65,7 +65,6 @@ public class CameraController : MonoBehaviour
                 float MAX_Y = 1.5f;
                 float xMovement = 0;
                 float yMovement = 0;
-            //Debug.Log("One Player Camera not implemented yet");
                 
                 disBetweenAB = new Vector2(target[0].position.x - transform.position.x, target[0].position.y - transform.position.y);
                if(disBetweenAB.x > MAX_X)
