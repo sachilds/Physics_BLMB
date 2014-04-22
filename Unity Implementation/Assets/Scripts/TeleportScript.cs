@@ -52,7 +52,7 @@ public class TeleportScript : MonoBehaviour {
 
         Collider2D col = pTransform.gameObject.GetComponent<BoxCollider2D>();
         Rigidbody2D rig = pTransform.gameObject.GetComponent<Rigidbody2D>();
-
+        Debug.Log(col.GetType());
         renderer.enabled = false;
         col.enabled = false;
         rig.isKinematic = true;
@@ -68,7 +68,9 @@ public class TeleportScript : MonoBehaviour {
             pTransform.position = Vector3.Lerp(pTransform.position,
                  WarpToPortal.transform.position,
                  speed * Time.deltaTime);
-            if (pTransform.position == WarpToPortal.position)
+            if (pTransform.position == WarpToPortal.position 
+                || (Mathf.Abs(pTransform.position.x - WarpToPortal.position.x) < 1f 
+                && Mathf.Abs(pTransform.position.y - WarpToPortal.position.y) < 1))
             {
                 break;
             }

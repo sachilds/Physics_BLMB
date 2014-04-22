@@ -57,7 +57,7 @@ public class Hat : MonoBehaviour
     private bool canSpawn;
 
     private Player wearer;				//Reference to who is wearing the hat
-
+    private bool stopHat = false;
     void Awake()
     {
         canSpawn = true;
@@ -138,18 +138,24 @@ public class Hat : MonoBehaviour
                 break;
             
             case HatType.Indian:
-                float MAX_CHARGE_X = 200;
-                float MAX_CHARGE_Y = 350;
+                float MAX_CHARGE_X = 500;
+                float MAX_CHARGE_Y = 625;
                 float chargeRate = 15;
                 
-                Vector2 initialVelocity = new Vector2(25,25);
-                while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic"))
-                {                    
+                Vector2 initialVelocity = new Vector2(300,25);
+                while (Input.GetButton("P" + wearer.name[6] + ".HatMechanic") && wearer.renderer.enabled)
+                {
+                    if (stopHat)
+                    {
+                        stopHat = false;
+                        yield break;
+                    }
+                        
                     //plot
                     //RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
                    // Debug.DrawLine(transform.root.position, new Vector2(transform.root.position.x + 10, transform.root.position.y + 10), Color.green);
                   
-                    initialVelocity.y += chargeRate;
+                    initialVelocity.y += chargeRate * 2;
                     if(initialVelocity.x < MAX_CHARGE_X) initialVelocity.x += chargeRate;
                     
                     if (initialVelocity.y > MAX_CHARGE_Y) {
@@ -363,6 +369,7 @@ public class Hat : MonoBehaviour
             case HatType.Lollicopter:
                 Destroy(currentHat.gameObject);
                 break;
+            
             default:
                 break;
         }
@@ -388,7 +395,15 @@ public class Hat : MonoBehaviour
     {
         player.currentHat.wearer = null;
         player.currentHat.rigidbody2D.isKinematic = false;
-        player.currentHat.collider2D.enabled = true;
+        
+        Collider2D[] col = player.currentHat.GetComponents<Collider2D>();
+        foreach (Collider2D c in col)
+        {
+            c.enabled = true;
+            
+                Debug.Log(c.GetType());
+            
+        }
         player.currentHat.transform.position = player.hatHolder.position;
         player.currentHat.transform.parent = null;
     }
