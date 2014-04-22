@@ -16,7 +16,7 @@ public class Game_Manager : MonoBehaviour {
 
 
     public enum GameState { 
-        Menu, Credits, Pause, Options, InGame, Tutorial, GameOver
+		Menu, Credits, Pause, Options, InGame, Tutorial, GameOver, PlayerSelect
     }
     private bool isCreated;
     public static GameState gameState;
@@ -25,6 +25,10 @@ public class Game_Manager : MonoBehaviour {
 	//Cassie was here
 	public static float soundFXVol = 1.0f;
 	public static float backGroundVol = 1.0f;
+
+	//player select stuff
+	public GameObject single;
+	public GameObject coop;
 
 	// Use this for initialization
 	void Start () {
@@ -60,8 +64,7 @@ public class Game_Manager : MonoBehaviour {
 			    {
 					//PlayMenu();
 					Debug.Log("Play the Game");
-					//gameState = GameState.InGame;
-					LoadNewScreen("PlayerSelect");
+					gameState = GameState.PlayerSelect;					
 				}
 				//Options
 				if (Main_Menu_GUI.menuStatus.Equals("Options")) {
@@ -96,6 +99,31 @@ public class Game_Manager : MonoBehaviour {
             //TUTORIAL CONTROLS
             case GameState.Tutorial:
                 break;
+
+			//Player Select Stuff
+			case GameState.PlayerSelect:
+			Debug.Log("poop");
+			foreach (GameObject go in GameObject.FindGameObjectsWithTag("MenuGUI"))
+			{
+				go.active = false;
+			}
+			single.SetActive(true);
+			coop.SetActive(true);
+			if (PlayerSelect.menuStatus.Equals("Single"))
+			{
+				//PlayMenu();
+				Debug.Log("Single Player");
+				gameState = GameState.InGame;
+				Application.LoadLevel("CandyLand_1Player");
+			}
+			if (PlayerSelect.menuStatus.Equals("Coop"))
+			{
+				//PlayMenu();
+				Debug.Log("Coop Play");
+				gameState = GameState.InGame;
+				Application.LoadLevel("CandyLand_2Player");
+			}
+			break;
 
             //DEFAULT	
             default:
