@@ -15,7 +15,8 @@ public class PlayerLabel : MonoBehaviour
 	{
         if(!playerToFollow)
             playerToFollow = transform.parent.GetComponent<Player>();					//Label must be a child of the player
-		guiText = GetComponent<GUIText>();											//Get reference to GUIText component
+		
+        guiText = GetComponent<GUIText>();											//Get reference to GUIText component
 
 		guiText.text = playerToFollow.nickname;
 

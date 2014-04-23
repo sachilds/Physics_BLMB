@@ -5,7 +5,6 @@ public class BouyantObject : MonoBehaviour {
 
     private bool isOnWater;
     public float upwardForce = 11;
-    private float maxSlope = 60;
 
     void FixedUpdate() {
         if (isOnWater)

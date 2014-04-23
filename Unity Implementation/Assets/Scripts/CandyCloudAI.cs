@@ -13,7 +13,7 @@ public class CandyCloudAI : MonoBehaviour {
 
 	public float coeff;                 //coefficent of friction--public for now to play around with
 	private float mass;
-	private float slopeAngle;           //in rads
+	//private float slopeAngle;           //in rads
 
 	private bool sugarDropped;
 
@@ -21,7 +21,7 @@ public class CandyCloudAI : MonoBehaviour {
 	void Start () {
 		sugarDropped = false;
 		mass = 1.0f;
-		slopeAngle = 0f;
+		//slopeAngle = 0f;
 		forceNetX = PhysicsEngine.HorizontalNetForce(moveForce, coeff, mass);
 		startPos = cloud.transform.position;
 	}

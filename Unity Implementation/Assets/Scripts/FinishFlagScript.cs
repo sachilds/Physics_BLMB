@@ -2,21 +2,16 @@
 using System.Collections;
 
 public class FinishFlagScript : MonoBehaviour {
-	public static string name;
+	public static string mName;
 	// Use this for initialization
 	void Start () {
-		name = " ";
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		mName = " ";
 	}
 
 	void OnTriggerEnter2D(Collider2D c)
 	{
 		Game_Manager.gameState = Game_Manager.GameState.GameOver;
-		name = c.gameObject.transform.name;
+		mName = c.gameObject.transform.name;
 		Application.LoadLevel("FinalScreen");
 	}
 }

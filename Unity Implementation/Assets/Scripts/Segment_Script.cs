@@ -8,8 +8,6 @@ public struct Segment
     public Vector3 sBeginningPos;
   
     public float sSpeed;
- 
-
 }
 
 
@@ -21,9 +19,9 @@ public class Segment_Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         
-       Collider2D[] tempObjects = gameObject.GetComponentsInChildren<Collider2D>();
-       segments = new Segment[tempObjects.Length];
-
+        Collider2D[] tempObjects = gameObject.GetComponentsInChildren<Collider2D>();
+        segments = new Segment[tempObjects.Length];
+        
         for (int i = 0; i < segments.Length; i++)
 		{
             segments[i].sTransform = tempObjects[i].transform;
@@ -33,13 +31,7 @@ public class Segment_Script : MonoBehaviour {
             {
                 segments[i].sRenderer = tempObjects[i].renderer;
                 ToggleRenderer(segments[i]);
-            }
-            //if (!tempObjects[i].collider2D != null)
-            //{
-            //    segments[i].sCollider = tempObjects[i].collider2D;
-            //    segments[i].sCollider.enabled = false;
-            //}
-            
+            }            
 		}
     }
 
@@ -63,16 +55,14 @@ public class Segment_Script : MonoBehaviour {
         for (int i = 0; i < segments.Length; i++)
         {
             segments[i].sTransform.localPosition = segments[i].sBeginningPos;
-           segments[i].sRenderer.enabled = true;
-           // segments[i].sCollider.enabled = true;
+            if(segments[i].sRenderer)
+                segments[i].sRenderer.enabled = true;
         }
     }
     public void SpawnSegment(){
         for (int i = 0; i < segments.Length; i++)
         {
-            ToggleRenderer(segments[i]);
-           // segments[i].sCollider.enabled = true;
-            
+            ToggleRenderer(segments[i]);            
         }
         
     }
@@ -81,7 +71,6 @@ public class Segment_Script : MonoBehaviour {
         for (int i = 0; i < segments.Length; i++)
         {
             ToggleRenderer(segments[i]);
-           // segments[i].sCollider.enabled = true;
         }
        
     }

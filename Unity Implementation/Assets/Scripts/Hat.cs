@@ -86,27 +86,6 @@ public class Hat : MonoBehaviour
         rotation = transform.rotation.z;
         //==================================================================//
 
-        //Update and apply effects based on the current hat equipted
-        switch (hatType)
-        {
-            case HatType.None:
-                //scale = wearer.scale;
-                break;
-            case HatType.Indian:
-                break;
-            case HatType.Jello:
-                //scale = wearer.scale;
-                break;
-
-            case HatType.HookerHat:
-
-            case HatType.Lollicopter:
-
-                break;
-            case HatType.Boat:
-                break;
-        }
-
         if (wearer)
             transform.position = new Vector3(wearer.hatHolder.position.x, wearer.hatHolder.position.y, -0.1f);
     }
@@ -121,8 +100,6 @@ public class Hat : MonoBehaviour
     }
     public IEnumerator UseMechanic()
     {
-        
-        Debug.Log("YOLO");
         switch (hatType)
         {
             case HatType.None:
@@ -169,9 +146,6 @@ public class Hat : MonoBehaviour
                 go.GetComponent<Rigidbody2D>().AddForce(new Vector2(initialVelocity.x * dir, initialVelocity.y));
                 go.GetComponent<Rigidbody2D>().AddTorque(25);
                 GameObject.Destroy(go, 2);
-
-                Debug.Log("Broke out");
-
                 yield return new WaitForSeconds(Time.deltaTime);
 
                 canSpawn = true;
@@ -216,7 +190,6 @@ public class Hat : MonoBehaviour
                     }
                     else//just got hooked
                     {
-                        Debug.Log("Hooked");
                         d = Vector2.Distance(wearer.transform.position, hookInGame.transform.position);
                         v = Mathf.Sqrt(9.81f / d) ;//physics2d.gravity was giving issue
                         t = 0;
@@ -230,11 +203,6 @@ public class Hat : MonoBehaviour
                         newAngle = 0;
                         oldP = p;
                         oldD = d;
-                        Debug.Log("d = " + d
-                            + "| v = " + v
-                            + "| p = " + p
-                            + "| maxTheta = " + maxTheta
-                            + "| phaseAngle = " + phaseAngle);
                         break;
                     }
                 }
@@ -254,7 +222,6 @@ public class Hat : MonoBehaviour
                     float ropeClimbSpeed = 4;
                     if (Input.GetButton("P1.Vertical"))
                     {
-                        Debug.Log("Moving up");
                         d = d - ((ropeClimbSpeed * Input.GetAxis("P1.Vertical")) * Time.deltaTime);
 
                     }
@@ -297,13 +264,12 @@ public class Hat : MonoBehaviour
                     float tempX = Mathf.Sin(newAngle) * d;
                     float tempy = Mathf.Cos(newAngle) * d;
 
-                    Debug.Log(maxTheta);
                     wearer.transform.position = new Vector2(hookInGame.transform.position.x - tempX, hookInGame.transform.position.y - tempy);
 
 
-                    Debug.DrawLine(hookInGame.transform.position, wearer.transform.position);
-                    Debug.DrawLine(hookInGame.transform.position, new Vector2(hookInGame.transform.position.x, wearer.transform.position.y));
-                    Debug.DrawLine(wearer.transform.position, new Vector2(hookInGame.transform.position.x, wearer.transform.position.y));
+                    //Debug.DrawLine(hookInGame.transform.position, wearer.transform.position);
+                    //Debug.DrawLine(hookInGame.transform.position, new Vector2(hookInGame.transform.position.x, wearer.transform.position.y));
+                    //Debug.DrawLine(wearer.transform.position, new Vector2(hookInGame.transform.position.x, wearer.transform.position.y));
 
                     yield return new WaitForSeconds(Time.deltaTime);
                 }

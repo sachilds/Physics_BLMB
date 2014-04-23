@@ -29,7 +29,7 @@ public class PatrollingEnemyAI : MonoBehaviour {
 		startPos = gameObject.transform.position;
 		currentState = State.PATROL;
 		mass = 1.0f;
-		forceNetX = PhysicsEngine.HorizontalNetForce(moveForce,coeff,mass);
+		forceNetX = PhysicsEngine.HorizontalNetForce(moveForce, coeff, mass);
 		//sets enemy to face the right
 		gameObject.transform.localScale = new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.z);
 		faceLeft = false;

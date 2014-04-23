@@ -3,28 +3,22 @@ using System.Collections;
 
 public class Game_Manager : MonoBehaviour {
 
-    public static class MenuLabel {
-		public const int WIDTH = 190;
-		public const int HEIGHT = 60;
-		public const float PADDING = 15;
-	}
-
-    public static class GameLogoLabel {
-		public const int WIDTH = 500;
-		public const int HEIGHT = 150;		
-	}
-
+    private class PauseMenu { 
+        public const int WIDTH = 400;
+        public const int HEIGHT = 500;
+    }
 
     public enum GameState { 
 		Menu, Credits, Pause, Options, InGame, Tutorial, GameOver, PlayerSelect
     }
-    private bool isCreated;
+    private static bool isCreated;
     public static GameState gameState;
-    private GameState prevState;
+    public static bool isPaused;
 
 	//Cassie was here
 	public static float soundFXVol = 1.0f;
 	public static float backGroundVol = 1.0f;
+    public GUISkin menuSkin;
 
 	//player select stuff
 	public GameObject single;
@@ -37,6 +31,12 @@ public class Game_Manager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
 
             gameState = GameState.Menu;
+            single = Resources.Load("Prefabs/UI/Single-Player") as GameObject;
+            //single.SetActive(false);
+            coop = Resources.Load("Prefabs/UI/Coop-Player") as GameObject;
+            //coop.SetActive(false);
+
+
         }
         else {
             Destroy(gameObject);
@@ -55,6 +55,7 @@ public class Game_Manager : MonoBehaviour {
 
     // GUI
     void OnGUI() {
+        GUI.skin = menuSkin;
         switch (gameState)
         {
             //MAIN MENU
@@ -62,19 +63,23 @@ public class Game_Manager : MonoBehaviour {
 				//New Game
 				if (Main_Menu_GUI.menuStatus.Equals("Play"))
 			    {
-					//PlayMenu();
 					Debug.Log("Play the Game");
-					gameState = GameState.PlayerSelect;					
+					gameState = GameState.PlayerSelect;
+                    foreach (GameObject go in GameObject.FindGameObjectsWithTag("MenuGUI"))
+                        go.SetActive(false);
+
+                    Instantiate(single);
+                    Instantiate(coop);
+                    Debug.Log("HELLO MOFO");
+                    Main_Menu_GUI.menuStatus = " ";
 				}
 				//Options
 				if (Main_Menu_GUI.menuStatus.Equals("Options")) {
-					//PlayMenu();
 					Debug.Log("Open the Options");
 					gameState = GameState.Options;
-					LoadNewScreen("Options");
+					Application.LoadLevel("Options");
 				}
 				if (Main_Menu_GUI.menuStatus.Equals("Quit")) {
-					//PlayMenu();
 					Debug.Log("Quit the Game");
 					Application.Quit();
 				}
@@ -82,6 +87,9 @@ public class Game_Manager : MonoBehaviour {
 
             //IN-GAME	
             case GameState.InGame:
+                if (Input.GetKey(KeyCode.Escape)) {
+                    gameState = GameState.Pause;
+                }
                 break;
 
             //OPTIONS	
@@ -90,6 +98,19 @@ public class Game_Manager : MonoBehaviour {
 
             //PAUSE
             case GameState.Pause:
+                GUI.Box(GetPauseMenu(), "Paused");
+                GUI.BeginGroup(GetPauseMenu());
+                    Rect r = GetPauseMenu();
+                    if (GUI.Button(new Rect(r.width / 2 - 75, 100, 150, 50), "Resume")) {
+                        gameState = GameState.InGame;
+                        isPaused = false;
+                    }
+                    if (GUI.Button(new Rect(r.width / 2 - 75, 200, 150, 50), "Quit")) {
+                        gameState = GameState.Menu;
+                        isPaused = false;
+                        Application.LoadLevel("MainMenu");
+                    }
+                GUI.EndGroup();
                 break;
 
             //GAME OVER	
@@ -102,26 +123,24 @@ public class Game_Manager : MonoBehaviour {
 
 			//Player Select Stuff
 			case GameState.PlayerSelect:
-			foreach (GameObject go in GameObject.FindGameObjectsWithTag("MenuGUI"))
-			{
-				go.active = false;
-			}
-			single.SetActive(true);
-			coop.SetActive(true);
-			if (PlayerSelect.menuStatus.Equals("Single"))
-			{
-				//PlayMenu();
-				Debug.Log("Single Player");
-				gameState = GameState.InGame;
-				Application.LoadLevel("CandyLand_1Player");
-			}
-			if (PlayerSelect.menuStatus.Equals("Coop"))
-			{
-				//PlayMenu();
-				Debug.Log("Coop Play");
-				gameState = GameState.InGame;
-				Application.LoadLevel("CandyLand_2Player");
-			}
+			    //single.SetActive(true);
+			    //coop.SetActive(true);
+			    if (PlayerSelect.menuStatus.Equals("Single"))
+			    {
+				    //PlayMenu();
+				    Debug.Log("Single Player");
+				    gameState = GameState.InGame;
+                    PlayerSelect.menuStatus = " ";
+				    Application.LoadLevel("CandyLand_1Player");
+			    }
+			    if (PlayerSelect.menuStatus.Equals("Coop"))
+			    {
+				    //PlayMenu();
+				    Debug.Log("Coop Play");
+				    gameState = GameState.InGame;
+                    PlayerSelect.menuStatus = " ";
+				    Application.LoadLevel("CandyLand_2Player");
+			    }
 			break;
 
             //DEFAULT	
@@ -131,58 +150,19 @@ public class Game_Manager : MonoBehaviour {
     }
 
 
-    // Play Menu
-    // Plays the Menu click sound and saves the game state to prevState before changing
-    private void PlayMenu() {
-        // audio.Play(); TODO: Add Sound Effects
-        prevState = gameState;
-    }
-
-    //Load a New Screen
-    private void LoadNewScreen(string ID) {
-        transform.parent = null;
-
-        if (ID != "")
-            Application.LoadLevel(ID);
-    }
-
-    
-    #region UI Mapping
-    public Rect GetCenterScreen() {
-        return new Rect(Screen.width / 2, 
+    private Rect GetCenterScreen() {
+        return new Rect(Screen.width / 2,
                         Screen.height / 2,
-                        Screen.width / 2,
-                        Screen.height / 2);
+                        0,
+                        0);
     }
 
-    #region MainMenu
-    public Rect GetMainMenu() {
-        Rect tmp = GetCenterScreen();
+    private Rect GetPauseMenu() {
+        Rect r = GetCenterScreen();
 
-        return new Rect(tmp.x - (MenuLabel.WIDTH / 2),
-                        tmp.y - (MenuLabel.HEIGHT / 2),
-                        MenuLabel.WIDTH,
-                        (MenuLabel.HEIGHT * 3) + (MenuLabel.PADDING * 3));
+        return new Rect(r.x - PauseMenu.WIDTH /2,
+                        r.y - PauseMenu.HEIGHT / 2,
+                        PauseMenu.WIDTH,
+                        PauseMenu.HEIGHT);
     }
-
-    public Rect GetMenuLogo() {
-        Rect tmp = GetCenterScreen();
-
-        return new Rect(tmp.x - GameLogoLabel.WIDTH / 2,
-                        tmp.y - GameLogoLabel.HEIGHT,
-                        GameLogoLabel.WIDTH,
-                        GameLogoLabel.HEIGHT);
-    }
-
-    public Rect GetMenuLabel(float yOffset) {
-        return new Rect(0,
-                        MenuLabel.HEIGHT * (yOffset - 1) + (yOffset * MenuLabel.PADDING),
-                        MenuLabel.WIDTH,
-                        MenuLabel.HEIGHT);
-    }
-
-    #endregion
-
-    #endregion
-
 } // End of Class

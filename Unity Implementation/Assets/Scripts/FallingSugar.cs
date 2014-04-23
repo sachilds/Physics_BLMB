@@ -15,7 +15,6 @@ public class FallingSugar : MonoBehaviour {
 		hitGround = false;
 		forceNetDrop = CalculateVerticalForce(dropForce,mass);
 		Destroy(gameObject,5.0f);
-		Debug.Log("sugar net drop: "+ forceNetDrop);
 	}
 	
 	// Update is called once per frame

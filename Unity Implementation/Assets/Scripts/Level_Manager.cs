@@ -17,7 +17,8 @@ public class Level_Manager : MonoBehaviour {
     public static int NumberOfPlayers = 1; // set this for now till we handle the mainmenu and setting up 2 players
     [HideInInspector]
     public GameObject Player1, Player2;
-	void Start () {
+	
+    void Start () {
         Player1 = GameObject.Find("Player1");
 
         GameObject[] tempPoints = GameObject.FindGameObjectsWithTag("CheckPoint");
@@ -39,10 +40,11 @@ public class Level_Manager : MonoBehaviour {
         }
         else
         {
-                mTheSegments = new Segment_Script[3];
+                mTheSegments = new Segment_Script[4];
                 mTheSegments[0] = GameObject.Find("Stage1").GetComponent<Segment_Script>();
                 mTheSegments[1] = GameObject.Find("Stage2").GetComponent<Segment_Script>();
                 mTheSegments[2] = GameObject.Find("Stage3").GetComponent<Segment_Script>();
+                mTheSegments[3] = GameObject.Find("Stage4").GetComponent<Segment_Script>();
         }
 
         Instance = this;

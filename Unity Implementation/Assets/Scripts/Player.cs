@@ -38,12 +38,16 @@ public class Player : Character
 	}
 
 	void Update() {
-		base.Update();
-        GetMaxHeight();
+        if (!Game_Manager.isPaused)
+        {
+            base.Update();
+            GetMaxHeight();
+        }
 	}
 
     void FixedUpdate() {
-        rigidbody2D.AddForce(new Vector2(0, PhysicsEngine.GRAVITY));
+        if(!Game_Manager.isPaused)
+            rigidbody2D.AddForce(new Vector2(0, PhysicsEngine.GRAVITY));
     }
 
     // Movement and Caluclation-y stuffs
@@ -71,7 +75,6 @@ public class Player : Character
 
         if (maxHeight > CAP_MAX_HEIGHT)
             maxHeight = CAP_MAX_HEIGHT;
-        Debug.Log(maxHeight);
 
         float Force = PhysicsEngine.CalculateVerticalBounce(maxHeight, mass);
         rigidbody2D.AddForce(new Vector2(0, Force * Time.deltaTime));

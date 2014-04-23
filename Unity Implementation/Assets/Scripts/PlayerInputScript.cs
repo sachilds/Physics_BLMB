@@ -21,15 +21,17 @@ public class PlayerInputScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Player.renderer.enabled)
+        if (!Game_Manager.isPaused)
         {
-            handleGameplay();   
+            if (Player.renderer.enabled)
+            {
+                handleGameplay();
+            }
+            else
+            {
+                Player.rigidbody2D.velocity = Vector2.zero;
+            }
         }
-        else
-        {
-            Player.rigidbody2D.velocity = Vector2.zero;
-        }
-            
     }
 
     private void handleGameplay()

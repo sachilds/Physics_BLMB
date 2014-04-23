@@ -46,17 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDir.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RotateCamera.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutodestructWhenNoChildren.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_ShurikenThreadFix.cs" />
-     <Compile Include="Assets\JMO Assets\Cartoon FX\Spawn System\CFX_SpawnSystem.cs" />
-     <Compile Include="Assets\RatioFix.cs" />
+     <Compile Include="Assets\GrabMainObject.cs" />
      <Compile Include="Assets\Scripts\AdjustVolume.cs" />
      <Compile Include="Assets\Scripts\Boat_Script.cs" />
      <Compile Include="Assets\Scripts\BouyantObject.cs" />
@@ -87,20 +77,12 @@
      <Compile Include="Assets\Scripts\PlayerLabel.cs" />
      <Compile Include="Assets\Scripts\PlayerSelect.cs" />
      <Compile Include="Assets\Scripts\PortalEffect.cs" />
+     <Compile Include="Assets\Scripts\RatioFix.cs" />
      <Compile Include="Assets\Scripts\Segment_Script.cs" />
      <Compile Include="Assets\Scripts\Switch.cs" />
      <Compile Include="Assets\Scripts\Switch_Door.cs" />
      <Compile Include="Assets\Scripts\TeleportScript.cs" />
      <Compile Include="Assets\Scripts\TurretAI.cs" />
-     <Compile Include="Assets\Testing\TestingScripts\Collider_Demo.cs" />
-     <Compile Include="Assets\Testing\TestingScripts\CustomRigidBody.cs" />
-     <Compile Include="Assets\Testing\TestingScripts\DummyMovement.cs" />
-     <None Include="Assets\JMO Assets\Cartoon FX\Shaders (Mobile)\CFXM_MobileParticleAdd_Alpha8.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX Releases Notes.txt" />
-     <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
-     <None Include="Assets\JMO Assets\!JMO Assets Readme.txt" />
-     <None Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
-     <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
